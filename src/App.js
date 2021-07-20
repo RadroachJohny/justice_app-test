@@ -1,23 +1,18 @@
-import logo from './logo.svg';
 import './App.css';
+import MainNavigation from './components/MainNavigation/MainNavigation';
+import MainContent from './components/MainContent/MainContent';
+import ProductModal from './components/ProductModal/ProductModal';
+import SignIn from './components/SignIn/SignIn';
+
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <SignIn/>
+      {/*<MainNavigation/>*/}
+      {/*<MainContent />*/}
+      {/*<ProductModal formHeader={'Adding a Product'} btnText={'Save Changes'}/>*/}
+      {/*  <ProductModal formHeader={'Creating a Product'} btnText={'Add Product'}/>*/}
     </div>
   );
 }

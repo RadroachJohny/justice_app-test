@@ -1,3 +1,5 @@
+import { NavLink } from 'react-router-dom';
+
 import classes from './styles.module.scss';
 import logo from '../../assets/images/Logo.svg';
 import logoutArrow from "../../assets/images/logout-arrow.svg";
@@ -18,7 +20,7 @@ const MainNavigation = () => {
                         </svg>
                         Main Page
                     </li>
-                    <li className={classes['main-links__link']}>
+                    <li className={classes['main-links__link']}><NavLink to='/sales-statistics'>
                         <svg width="18" height="22" viewBox="0 0 18 22" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path
                                 d="M11 1H3C2.46957 1 1.96086 1.21071 1.58579 1.58579C1.21071 1.96086 1 2.46957 1 3V19C1 19.5304 1.21071 20.0391 1.58579 20.4142C1.96086 20.7893 2.46957 21 3 21H15C15.5304 21 16.0391 20.7893 16.4142 20.4142C16.7893 20.0391 17 19.5304 17 19V7L11 1Z"
@@ -33,21 +35,26 @@ const MainNavigation = () => {
                                   stroke-linejoin="round"/>
                         </svg>
                         My products
+                    </NavLink>
                     </li>
                     <li className={classes['main-links__link']}>
-                        <svg width="18" height="18" viewBox="0 0 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M16 2L2 16" stroke="#2B3844" stroke-width="1.8" stroke-linecap="round"
-                                  stroke-linejoin="round"/>
-                            <path
-                                d="M3.5 6C4.88071 6 6 4.88071 6 3.5C6 2.11929 4.88071 1 3.5 1C2.11929 1 1 2.11929 1 3.5C1 4.88071 2.11929 6 3.5 6Z"
-                                stroke="#2B3844" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                            <path
-                                d="M14.5 17C15.8807 17 17 15.8807 17 14.5C17 13.1193 15.8807 12 14.5 12C13.1193 12 12 13.1193 12 14.5C12 15.8807 13.1193 17 14.5 17Z"
-                                stroke="#2B3844" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                        My Sales
+                        <NavLink to='/my-sales'>
+                            <svg width="18" height="18" viewBox="0 0 18 18" fill="none"
+                                 xmlns="http://www.w3.org/2000/svg">
+                                <path d="M16 2L2 16" stroke="#2B3844" stroke-width="1.8" stroke-linecap="round"
+                                      stroke-linejoin="round"/>
+                                <path
+                                    d="M3.5 6C4.88071 6 6 4.88071 6 3.5C6 2.11929 4.88071 1 3.5 1C2.11929 1 1 2.11929 1 3.5C1 4.88071 2.11929 6 3.5 6Z"
+                                    stroke="#2B3844" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path
+                                    d="M14.5 17C15.8807 17 17 15.8807 17 14.5C17 13.1193 15.8807 12 14.5 12C13.1193 12 12 13.1193 12 14.5C12 15.8807 13.1193 17 14.5 17Z"
+                                    stroke="#2B3844" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                            My Sales
+                        </NavLink>
                     </li>
                     <li className={classes['main-links__link']}>
+                        <NavLink to='personal-cabinet'>
                         <svg width="18" height="20" viewBox="0 0 18 20" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path
                                 d="M17 19V17C17 15.9391 16.5786 14.9217 15.8284 14.1716C15.0783 13.4214 14.0609 13 13 13H5C3.93913 13 2.92172 13.4214 2.17157 14.1716C1.42143 14.9217 1 15.9391 1 17V19"
@@ -57,6 +64,7 @@ const MainNavigation = () => {
                                 stroke="#2B3844" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
                         Personal Cabinet
+                    </NavLink>
                     </li>
                 </ul>
                 <div className={classes.logout}><img src={logoutArrow} alt=""/>Log Out</div>

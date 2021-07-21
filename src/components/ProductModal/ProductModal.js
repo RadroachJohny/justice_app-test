@@ -1,10 +1,19 @@
+import {useRef} from 'react';
 import classes from './styles.module.scss';
 
 import cross from '../../assets/images/cross.png';
 
 const ProductModal = (props) => {
+    const modalRef = useRef();
+
+    const overlayClickCheck = (e) => {
+        if (e.target === modalRef.current) {
+            props.modalClose();
+        }
+    }
+
     return (
-        <div className={classes['modal-overlay']}>
+        <div ref={modalRef} onClick={overlayClickCheck} className={classes['modal-overlay']}>
             <div className={classes['modal-wrapper']}>
                 <div className={classes['modal-close']}><img src={cross} alt="close button"/></div>
                 <h3 className={classes['modal-title']}>{props.formHeader}</h3>

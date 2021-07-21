@@ -7,7 +7,7 @@ const SignIn = () => {
         <div className={classes.main}>
             <div className={classes['form-wrapper']}>
                 <div className={classes['form-block']}>
-                    <h3 className={classes['form-title']}>Sign in</h3>
+                    <p className={classes['form-title']}>Sign in</p>
                     <form className={classes.form}>
                         <div className={classes['input-block']}>
                             <label htmlFor="email">Email</label>
@@ -18,7 +18,7 @@ const SignIn = () => {
                             <input id='pass' type="password" placeholder='Enter Password'/>
                         </div>
                         <button className={classes['form-submit']} type='submit'>Log in</button>
-                        <a className={classes['remind-pass']} href=''>Forgot password ?</a>
+                        <a className={classes['remind-pass']} href='www.random.com'>Forgot password ?</a>
                     </form>
                 </div>
             </div>

@@ -1,0 +1,23 @@
+.table {
+  color: #000000;
+  &-wrapper {
+    width: 100%;
+  }
+  &-head {
+    background-color: #2B3844;
+    &__list {
+      display: grid;
+      grid-template-columns: repeat(9, 11.11%);
+      padding-top: 20px;
+      padding-bottom: 20px;
+      margin-bottom: 24px;
+      border-radius: 3px;
+      font-weight: 500;
+      font-size: 14px;
+      line-height: 14px;
+      color: #ffffff;
+
+    }
+  }
+}
+

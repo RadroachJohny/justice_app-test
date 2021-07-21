@@ -1,6 +1,7 @@
 import classes from './styles.module.scss'; 
 
 const PersonalCabinet = () => {
+
     return (
         <form className={classes['cabinet-form']}>
             <div className={classes['input-block']}>

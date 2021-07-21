@@ -2,7 +2,7 @@ import classes from './styles.module.scss';
 
 import banner from '../../assets/images/banner.jpg';
 
-const SignIn = () => {
+const CreateAccount = () => {
     return (
         <div className={classes.main}>
             <div className={classes['form-wrapper']}>
@@ -49,4 +49,4 @@ const SignIn = () => {
     )
 };
 
-export default SignIn;
+export default CreateAccount;

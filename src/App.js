@@ -1,3 +1,4 @@
+import { Route, Redirect } from 'react-router-dom';
 import { useState } from 'react';
 
 import './App.css';
@@ -17,15 +18,25 @@ function App() {
 
   return (
     <div className="App">
-      <MainNavigation/>
+        <Route path='/' exact>
+            <Redirect to='main-page'/>
+        </Route>
+
+      {/*<MainNavigation/>*/}
 
       <MainContent modalShow={createProductModalHandler}/>
 
+        <Route path='/create-account' >
+            <CreateAccount/>
+        </Route>
+        <Route path='/sign-in' >
+            <SignIn/>
+        </Route>
+
         {createProductModalShow && <ProductModal modalClose={createProductModalHandler} formHeader={'Adding a Product'} btnText={'Save Changes'}/>}
-      {/*  <ProductModal formHeader={'Creating a Product'} btnText={'Add Product'}/>*/}
+        {/*  <ProductModal formHeader={'Creating a Product'} btnText={'Add Product'}/>*/}
     </div>
   );
 }
-{/*<CreateAccount/>*/}
 
 export default App;

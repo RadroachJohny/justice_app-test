@@ -10,7 +10,8 @@ ul {
 
 .App {
   text-align: center;
-  display: flex;
+  /*display: flex;*/
+  min-height: 100vh;
 }
 
 .App-logo {

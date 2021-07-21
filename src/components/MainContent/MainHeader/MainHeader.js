@@ -1,12 +1,7 @@
-import fileImg from '../../../assets/images/file-img.svg';
-
-
 import classes from './styles.module.scss';
 import CreateProductBtn from "../../CreateProductBtn/CreateProductBtn";
 
 const MainHeader = (props) => {
-
-
 
     return (
         <div className={classes['header-wrapper']}>

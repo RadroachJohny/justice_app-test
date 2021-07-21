@@ -4,6 +4,8 @@
   position: relative;
   max-width: 274px;
   min-height: 100vh;
+  position: fixed;
+  background-color: #fff;
   &::after {
     content: '';
     position: absolute;
@@ -23,15 +25,33 @@
     &__link {
       display: flex;
       align-items: center;
-      padding: 21px 0 21px 40px;
       text-align: left;
       color: #908f8f;
-      & > svg{
+      & svg{
         margin-right: 11px;
         & > path {
           stroke: #908f8f;
         }
+      }
+      & a {
+        padding: 21px 0 21px 40px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        text-decoration: none;
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 14px;
+        //color: #2B3844;
 
+        &:visited,
+        &:hover,
+        &:active {
+          font-weight: 500;
+          font-size: 14px;
+          line-height: 14px;
+          color: #2B3844;
+        }
       }
     }
     &__link.active {
@@ -54,10 +74,30 @@
   align-items: center;
   bottom: 48px;
   color: #908f8f;
+  opacity: 0.4;
+  text-decoration: none;
   & > img {
     margin-right: 9px;
   }
 
+}
+
+.navLinkText {
+  color: #2B3844;
+}
+
+.active-link {
+  color: #5382E7;
+  background: rgba(#5382E7, 0.04);
+  border-right: 2px solid #5382E7;
+  & > svg > path {
+    stroke: #5382E7;
+  }
+  &:visited,
+  &:hover,
+  &:active {
+    color: #5382E7 !important;
+  }
 }
 
 

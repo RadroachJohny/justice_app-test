@@ -1,26 +1,38 @@
-import { Route } from 'react-router-dom';
+import {Route} from 'react-router-dom';
 
+import MainPage from "../MainPage/MainPage";
 import MainHeader from './MainHeader/MainHeader';
 import PersonalCabinet from '../PersonalCabinet/PersonalCabinet';
 import SalesTable from "../SalesTable/SalesTable";
+import MainNavigation from "../MainNavigation/MainNavigation";
 
 import classes from './style.module.scss';
 
-const title = 'Sales statistics';
-const subtitle = 'Welcome to CRM dashboard';
 
 const MainContent = (props) => {
     return (
-        <div className={classes.mainWrapper}>
+            <>
+            <Route path='/main-page'>
+                <MainNavigation/>
+                <div className={classes.mainWrapper}>
+                <MainHeader title={'Sales statistics'} subtitle={'Welcome to CRM dashboard'} modalShow={props.modalShow}/>
+                <MainPage/>
+                </div>
+            </Route>
+
             <SalesTable modalShow={props.modalShow}/>
 
             <Route path='/personal-cabinet'>
-                <MainHeader title={'Personal Cabinet'} subtitle={'Information about account'} modalShow={props.modalShow}/>
+                <MainNavigation/>
+                <div className={classes.mainWrapper}>
+                <MainHeader title={'Personal Cabinet'} subtitle={'Information about account'}
+                            modalShow={props.modalShow}/>
                 <PersonalCabinet/>
+                </div>
             </Route>
+            </>
 
 
-        </div>
 
     )
 }

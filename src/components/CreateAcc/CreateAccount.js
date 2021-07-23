@@ -13,6 +13,7 @@ const CreateAccount = () => {
 
     const formValidation = (e) => {
         e.preventDefault();
+
         console.log({name: name.current.value,
             lastName: lastName.current.value,
             companyName: companyName.current.value,})

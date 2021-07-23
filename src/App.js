@@ -28,7 +28,7 @@ function App() {
         deleteItemFromItemsList(id);
         //Add newly added elem to sell list
         setSalesListArr(prev => {
-            return [chosenElemForSale, ...prev];
+            return [...prev, chosenElemForSale];
         })
         //Add that new elem to local storage
         addSaleslistToLocalStorage(chosenElemForSale);
@@ -46,7 +46,6 @@ function App() {
     useEffect(() => {
         if (localStorage.getItem('salesList')) {
             const arrFromStorage = JSON.parse(localStorage.getItem('salesList'));
-            console.log(arrFromStorage);
             setSalesListArr(arrFromStorage);
         }
     }, [setSalesListArr]);

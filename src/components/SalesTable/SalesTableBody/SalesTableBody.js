@@ -12,24 +12,27 @@ const SalesTableBody = (props) => {
         creationDate,
         price,
         remains,
-        weightVolume
+        weightVolume,
+        saleDate,
+        id
     } = props.data;
 
-
-    const lastColumnContent = <div className={classes['table-body__controls']}>
-        <button className={`${classes['table-body__sell']} ${classes['table-body__rowbtn']}`} type='button'>Sell
+    let lastColumnContent = <div className={classes['table-body__controls']}>
+        <button onClick={() => props.sale(id)} className={`${classes['table-body__sell']} ${classes['table-body__rowbtn']}`} type='button'>Sell
         </button>
-        <button className={`${classes['table-body__edit']} ${classes['table-body__rowbtn']}`} type='button'><img
+        <button onClick={() => props.edit(id)} className={`${classes['table-body__edit']} ${classes['table-body__rowbtn']}`} type='button'><img
             src={pencil} alt="Edit item"/></button>
-        <button className={`${classes['table-body__delete']}`} type='button'><img src={cross} alt="Delete item"/>
+        <button onClick={()=> props.onDelete(id)} className={`${classes['table-body__delete']}`} type='button'><img src={cross} alt="Delete item"/>
         </button>
     </div>
+
+    if (saleDate) {
+        lastColumnContent = saleDate;
+    }
     const tableBodyListClasses = props.index % 2 === 0 ? (`${classes['table-body__list']} ${classes.white}`) : (classes['table-body__list'])
 
     return (
         <>
-
-
         <div className={classes['table-body']}>
             <ul className={tableBodyListClasses}>
                 <li>{productName}</li>

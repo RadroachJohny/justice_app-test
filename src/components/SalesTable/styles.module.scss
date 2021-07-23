@@ -16,12 +16,12 @@
       font-size: 14px;
       line-height: 14px;
       color: #ffffff;
-
     }
   }
 }
 
 .mainWrapper {
+  min-height: 100vh;
   flex-grow: 1;
   background-color: #F8F8F8;
   padding-left: 330px;

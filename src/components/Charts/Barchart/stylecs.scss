@@ -1,0 +1,34 @@
+.barchart {
+  height: 100%;
+  & #center-axis-container svg {
+    & path {
+      //display: none;
+    }
+    & rect {
+      fill: #5B6ACD;
+    }
+  }
+  #top-container {
+    display: flex;
+    flex-direction: column !important;
+    margin-bottom: 60px;
+    h3 {
+      width: auto;
+      margin: 0;
+      text-align: left;
+      &:first-of-type {
+        margin-bottom: 8px;
+        font-weight: 600;
+        font-size: 18px;
+        line-height: 18px;
+        color: #2B3844;
+        & + * {
+            font-weight: normal;
+            font-size: 12px;
+            line-height: 12px;
+        }
+      }
+
+    }
+  }
+}

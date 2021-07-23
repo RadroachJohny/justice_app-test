@@ -10,29 +10,29 @@ import classes from './style.module.scss';
 
 
 const MainContent = (props) => {
+
     return (
-            <>
+        <>
             <Route path='/main-page'>
                 <MainNavigation/>
                 <div className={classes.mainWrapper}>
-                <MainHeader title={'Sales statistics'} subtitle={'Welcome to CRM dashboard'} modalShow={props.modalShow}/>
-                <MainPage/>
+                    <MainHeader title={'Sales statistics'} subtitle={'Welcome to CRM dashboard'}
+                                modalShow={props.modalShow}/>
+                    <MainPage/>
                 </div>
             </Route>
 
-            <SalesTable modalShow={props.modalShow}/>
+            <SalesTable salesList={props.salesList} sale={props.sale} onDelete={props.onDelete} itemsList={props.itemsList} edit={props.edit} modalShow={props.modalShow}/>
 
             <Route path='/personal-cabinet'>
                 <MainNavigation/>
                 <div className={classes.mainWrapper}>
-                <MainHeader title={'Personal Cabinet'} subtitle={'Information about account'}
-                            modalShow={props.modalShow}/>
-                <PersonalCabinet/>
+                    <MainHeader title={'Personal Cabinet'} subtitle={'Information about account'}
+                                modalShow={props.modalShow}/>
+                    <PersonalCabinet/>
                 </div>
             </Route>
-            </>
-
-
+        </>
 
     )
 }

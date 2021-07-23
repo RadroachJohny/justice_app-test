@@ -1,42 +1,149 @@
-import { Route, Redirect } from 'react-router-dom';
-import { useState } from 'react';
+import {Route, Redirect} from 'react-router-dom';
+import {useState, useEffect} from 'react';
 
 import './App.css';
-import MainNavigation from './components/MainNavigation/MainNavigation';
 import MainContent from './components/MainContent/MainContent';
 import ProductModal from './components/ProductModal/ProductModal';
 import SignIn from './components/SignIn/SignIn';
 import CreateAccount from "./components/CreateAcc/CreateAccount";
 
+import {itemsArr} from './ProductData/ProductData';
+import {SalesArr} from './ProductData/ProductSales';
+
 
 function App() {
+    const [itemsListArr, setItemsListArr] = useState([]);
+    const [salesListArr, setSalesListArr] = useState([]);
+
     const [createProductModalShow, setCreateProductModalShow] = useState(false);
 
-    const createProductModalHandler = () => {
+    const [editProductModalId, setEditProductModalId] = useState(null);
+
+
+    const saleItemHandler = (id) => {
+        const chosenElemForSale = itemsListArr.find((elem) => elem.id === id);
+        const dt = new Date();
+        chosenElemForSale.saleDate = `${dt.getDate()}.${dt.getMonth() + 1}.${dt.getFullYear()}`;
+        //Delete item from My Products list and Local Storage
+        deleteItemFromItemsList(id);
+        //Add newly added elem to sell list
+        setSalesListArr(prev => {
+            return [chosenElemForSale, ...prev];
+        })
+        //Add that new elem to local storage
+        addSaleslistToLocalStorage(chosenElemForSale);
+    }
+
+    //Get Data for ProductList
+    useEffect(() => {
+        if (localStorage.getItem('productList')) {
+            const arrFromStorage = JSON.parse(localStorage.getItem('productList'));
+            setItemsListArr(arrFromStorage);
+        }
+    }, [setItemsListArr]);
+
+    //Get Data for SalesList
+    useEffect(() => {
+        if (localStorage.getItem('salesList')) {
+            const arrFromStorage = JSON.parse(localStorage.getItem('salesList'));
+            console.log(arrFromStorage);
+            setSalesListArr(arrFromStorage);
+        }
+    }, [setSalesListArr]);
+
+
+    //Add new item from Product List to Local Storage
+    const addItemlistToLocalStorage = (arr) => {
+        let oldArrFromLocalStorage = JSON.parse(localStorage.getItem('productList')) || [];
+        oldArrFromLocalStorage.push(arr);
+        localStorage.setItem('productList', JSON.stringify(oldArrFromLocalStorage));
+    };
+
+    //Add element transfered to 'My Sales' in Local storage
+    const addSaleslistToLocalStorage = (arr) => {
+        const oldArrFromLocalStorage = JSON.parse(localStorage.getItem('salesList')) || [];
+        oldArrFromLocalStorage.push(arr);
+        localStorage.setItem('salesList', JSON.stringify(oldArrFromLocalStorage));
+    };
+
+
+    //Delete item from My Products list and Local Storage
+    const deleteItemFromItemsList = (id) => {
+        const newArr = itemsListArr.filter((elem) => elem.id !== id);
+        localStorage.setItem('productList', JSON.stringify(newArr));
+        setItemsListArr(newArr);
+    };
+
+    //Add new elem to My Products list and Local Storage
+    const addNewProductToItemsList = (obj) => {
+        setItemsListArr((prev) => {
+            return [...prev, obj]
+        });
+        addItemlistToLocalStorage(obj);
+
+        //Close Modal
+        createProductModal();
+    }
+
+    //Open create product modal
+    const createProductModal = () => {
         setCreateProductModalShow((prev) => !prev);
     };
 
-  return (
-    <div className="App">
-        <Route path='/' exact>
-            <Redirect to='main-page'/>
-        </Route>
+    //Close edit product modal
+    const editProductModal = () => {
+        setEditProductModalId(null);
+    };
 
-      {/*<MainNavigation/>*/}
+    //Open Edit modal and push id in it
+    const edit = (id) => {
+        setEditProductModalId(id);
+    };
 
-      <MainContent modalShow={createProductModalHandler}/>
 
-        <Route path='/create-account' >
-            <CreateAccount/>
-        </Route>
-        <Route path='/sign-in' >
-            <SignIn/>
-        </Route>
+    //Edit elem in My Products list
+    const editField = (obj, id) => {
+        const arrWithEditedField = itemsListArr.map((elem) => {
+            if (elem.id === id) {
+                return obj;
+            } else {
+                return elem;
+            }
+        });
 
-        {createProductModalShow && <ProductModal modalClose={createProductModalHandler} formHeader={'Adding a Product'} btnText={'Save Changes'}/>}
-        {/*  <ProductModal formHeader={'Creating a Product'} btnText={'Add Product'}/>*/}
-    </div>
-  );
+        localStorage.setItem('productList', JSON.stringify(arrWithEditedField));
+        setItemsListArr(arrWithEditedField);
+
+        //Close Edit Product Modal
+        editProductModal();
+    };
+
+    return (
+        <div className="App">
+
+            <Route path='/' exact>
+                <Redirect to='main-page'/>
+            </Route>
+
+            <MainContent sale={saleItemHandler} itemsList={itemsListArr} salesList={salesListArr} edit={edit}
+                         onDelete={deleteItemFromItemsList} modalShow={createProductModal}/>
+
+            <Route path='/create-account'>
+                <CreateAccount/>
+            </Route>
+            <Route path='/sign-in'>
+                <SignIn/>
+            </Route>
+
+            {createProductModalShow &&
+            <ProductModal addToStorage={addItemlistToLocalStorage} addItemProductList={addNewProductToItemsList}
+                          modalClose={createProductModal} formHeader={'Creating a Product'} btnText={'Add Product'}/>}
+
+            {editProductModalId && <ProductModal edit={editField} itemsList={itemsListArr} id={editProductModalId}
+                                                 modalClose={editProductModal} formHeader={'Editing a Product'}
+                                                 btnText={'Save Changes'}/>}
+        </div>
+    );
 }
 
 export default App;

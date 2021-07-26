@@ -3,8 +3,6 @@ import {Route} from 'react-router-dom';
 
 import classes from './styles.module.scss';
 
-import {SalesArr} from '../../ProductData/ProductSales';
-
 import SalesTableBody from "./SalesTableBody/SalesTableBody";
 import MainHeader from "../MainContent/MainHeader/MainHeader";
 import MainNavigation from "../MainNavigation/MainNavigation";

@@ -27,7 +27,7 @@ const SignIn = () => {
 
         if (existingUser) {
             localStorage.setItem('isLoggedIn', JSON.stringify(true));
-            localStorage.setItem('currentUser', JSON.stringify(existingUser));
+            localStorage.setItem('currentUser', JSON.stringify({...existingUser, productCat: 'NA', address: 'NA'}));
             setRedirectToMain(true);
             setUserNotFound(false);
         } else {

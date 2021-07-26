@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Redirect, useHistory }  from 'react-router-dom';
+import { Redirect }  from 'react-router-dom';
 
 import useInput from "../hooks/use-input";
 import usePassword from "../hooks/use-password";
@@ -154,7 +154,7 @@ const CreateAccount = () => {
         <div className={classes["form-block"]}>
           <p className={classes["form-title"]}>Create an account</p>
 
-          <form onSubmit={formValidation} className={classes.form}>
+          <form  className={classes.form}>
             <div className={classes["username-block"]}>
               <div className={firstNameClasses}>
                 <label htmlFor="firstName">First name</label>

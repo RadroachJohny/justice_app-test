@@ -41,3 +41,12 @@
     background: transparent;
   }
 }
+
+.invalid {
+  & p {
+    color: red;
+  }
+  & > input {
+    border-color: rgb(216, 119, 119);
+  }
+}

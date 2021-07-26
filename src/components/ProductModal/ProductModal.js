@@ -1,7 +1,6 @@
 import {useRef} from 'react';
 import classes from './styles.module.scss';
 import cross from '../../assets/images/cross.png';
-import {itemsArr} from "../../ProductData/ProductData";
 
 const ProductModal = (props) => {
     const modalOverlayRef = useRef();

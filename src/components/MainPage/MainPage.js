@@ -5,6 +5,7 @@ import Piechart from "../Charts/Piechart/Piechart";
 import Barchart from "../Charts/Barchart/Barchart";
 
 const MainPage = () => {
+
     return (
 
         <div className={classes.wrapper}>

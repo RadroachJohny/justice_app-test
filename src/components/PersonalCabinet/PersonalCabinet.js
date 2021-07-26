@@ -2,15 +2,21 @@ import classes from './styles.module.scss';
 
 const PersonalCabinet = () => {
 
+const userInfo = JSON.parse(localStorage.getItem('currentUser'));
+
+const {firstName, lastName, companyName} = userInfo;
+
+console.log(userInfo)
+
     return (
         <form className={classes['cabinet-form']}>
             <div className={classes['input-block']}>
                 <label htmlFor="firstname">First name</label>
-                <input id='firstname' type="text" placeholder='First name'/>
+                <input id='firstname' type="text" placeholder='First name' defaultValue={firstName}/>
             </div>
             <div className={classes['input-block']}>
                 <label htmlFor="lastname">Last name</label>
-                <input id='lastname' type="text" placeholder='Last name'/>
+                <input id='lastname' type="text" placeholder='Last name' defaultValue={lastName}/>
             </div>
             <div className={classes['input-block']}>
                 <label htmlFor="companyName">Company name</label>

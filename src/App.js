@@ -19,6 +19,11 @@ function App() {
 
     const [editProductModalId, setEditProductModalId] = useState(null);
 
+    let userLoggedIn = false;
+
+    if(JSON.parse(localStorage.getItem('isCreated')) && JSON.parse(localStorage.getItem('isLoggedIn'))) {
+        userLoggedIn = true;
+    }
 
     const saleItemHandler = (id) => {
         const chosenElemForSale = itemsListArr.find((elem) => elem.id === id);
@@ -117,7 +122,12 @@ function App() {
         editProductModal();
     };
 
+    console.log(userLoggedIn);
+
     return (
+        <>
+        {!userLoggedIn && <Redirect to={'/create-account'} />}
+
         <div className="App">
 
             <Route path='/' exact>
@@ -142,6 +152,7 @@ function App() {
                                                  modalClose={editProductModal} formHeader={'Editing a Product'}
                                                  btnText={'Save Changes'}/>}
         </div>
+        </>
     );
 }
 

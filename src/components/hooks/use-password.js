@@ -7,11 +7,17 @@ const usePassword = () => {
   let errorMessage = '';
 
   const valueIsValid = () => {
-    if (enteredValue.length < 10) {
-      errorMessage = 'Password should be atleast 10 symbols';
+    if (enteredValue.length < 6) {
+      errorMessage = 'should be min 6 letters';
       return false;
-    } else if (!/[!@#$%^&*()_+|]/.test(enteredValue)) {
-      errorMessage = 'Enter atleast 1 special symbol - !@#$%^&*()_+|';
+    } else if (!/[!@#$%^&]/.test(enteredValue)) {
+      errorMessage = 'should include min 1 any spec symbol (!@#$%^&)';
+      return false;
+    } else if (!/[a-z]/.test(enteredValue)) {
+      errorMessage = 'should include min 1 english lower case letter';
+      return false;
+    } else if (!/[A-Z]/.test(enteredValue)) {
+      errorMessage = 'should include min 1 english upper case letter';
       return false;
     }
     return true;
@@ -21,8 +27,17 @@ const usePassword = () => {
   const hasError = !valueIsValid() && isTouched;
 
   const valueChangeHandler = (event) => {
-    setEnteredValue(event.target.value);
+    if(event) {
+      console.log('01');
+      setEnteredValue(event.target.value);
+    } else if (!isTouched) {
+      console.log('02');
+      setEnteredValue('');
+      setIsTouched(true);
+    }
+
   }
+  console.log(enteredValue);
 
   const inputBlurHandler = (event) => {
     setIsTouched(true);

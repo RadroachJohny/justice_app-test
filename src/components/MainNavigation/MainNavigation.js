@@ -1,11 +1,22 @@
-import {NavLink, Link} from 'react-router-dom';
+import { useState } from 'react';
+import {NavLink, Redirect} from 'react-router-dom';
 
 import classes from './styles.module.scss';
 import logo from '../../assets/images/Logo.svg';
 import logoutArrow from "../../assets/images/logout-arrow.svg";
 
 const MainNavigation = () => {
+    const [loggedIn, setSignedIn] = useState(true);
+
+    const logOut = () => {
+      localStorage.setItem('isLoggedIn', JSON.stringify(false));
+        setSignedIn(false);
+
+    };
+
     return (
+        <>
+        {!loggedIn && <Redirect to='/sign-in'/>}
         <div className={classes.main}>
             <div className="logo">
                 <img className={classes.logo} src={logo} alt="Justice team logo"/>
@@ -71,12 +82,13 @@ const MainNavigation = () => {
                         </NavLink>
                     </li>
                 </ul>
-                <Link to='/sign-in' className={classes.logout}>
+                <button onClick={logOut} className={classes.logout}>
                     <img src={logoutArrow} alt="log out"/>
                     Log Out
-                </Link>
+                </button>
             </div>
         </div>
+            </>
     )
 }
 

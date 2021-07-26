@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { Redirect, useHistory }  from 'react-router-dom';
 
 import useInput from "../hooks/use-input";
 import usePassword from "../hooks/use-password";
@@ -8,11 +9,13 @@ import classes from "./styles.module.scss";
 import banner from "../../assets/images/banner.jpg";
 
 const isEnoughSymbols = (value) => value.trim().length > 5;
-const isEmail = (value) => value.includes("@");
+const isEmail = (value) => value.match(/^[a-zA-Z0-9]+@[a-z]{3,12}\.[a-z]+/);
+// const isEmail = (value) => value.includes("@");
 
 const CreateAccount = () => {
   const [passwords, setPasswords] = useState({pass1: '', pass2: ''});
   const [passwordsNotIdentical, setPasswordsNotIdentical] = useState(false);
+  const [isCreated, setIsCreated] = useState(JSON.parse(localStorage.getItem('isCreated')))
 
   useEffect(()=> {
     if (passwords.pass1 && passwords.pass2 && passwords.pass1 !== passwords.pass2) {
@@ -82,15 +85,23 @@ const CreateAccount = () => {
   const passwordClasses = passwordHasError ? `${classes["input-block"]} ${classes["invalid"]}` : `${classes["input-block"]}`;
   const repeatPasswordClasses = repeatPassHasError ? `${classes["input-block"]} ${classes["invalid"]}` : `${classes["input-block"]}`;
 
+  const passwordsCorrect = !passwordHasError && !repeatPassHasError;
 
   const formValidation = (e) => {
     e.preventDefault();
+
+    firstNameBlurHandler();
+    lastNameBlurHandler();
+    companyNameBlurHandler();
+    emailBlurHandler();
+    passwordChangeHandler();
+    repeatPassChangeHandler();
+
 
     if (!formIsValid || passwordsNotIdentical) {
       return;
     }
 
-    console.log(firstNameValue, lastNameValue, companyNameValue, emailValue, passwordValue, repeatPassValue);
 
     resetFirstName();
     resetLastName();
@@ -99,6 +110,33 @@ const CreateAccount = () => {
     resetPassword();
     resetRepeatPass();
     setPasswordsNotIdentical(false);
+
+    const userData = {
+      firstName: firstNameValue,
+      lastName: lastNameValue,
+      companyName: companyNameValue,
+      email: emailValue,
+      passwordValue
+    }
+
+    if (localStorage.getItem('users')) {
+      console.log(1)
+      const usersArr = JSON.parse(localStorage.getItem('users'));
+      usersArr.push(userData);
+      console.log(usersArr);
+      localStorage.setItem('users', JSON.stringify(usersArr))
+      setIsCreated(true)
+      localStorage.setItem('isCreated', JSON.stringify(true))
+      // history.push('/sign-in');
+    } else {
+      console.log(2)
+      const userArr = [userData];
+      localStorage.setItem('users', JSON.stringify(userArr))
+      setIsCreated(true)
+      localStorage.setItem('isCreated', JSON.stringify(true))
+      // history.push('/sign-in');
+    }
+
   };
 
   const setPasswordForComparison = (e) => (pass, blurHandler) => {
@@ -111,6 +149,7 @@ const CreateAccount = () => {
 
   return (
     <div className={classes.main}>
+      {isCreated && <Redirect to={'sign-in'} />}
       <div className={classes["form-wrapper"]}>
         <div className={classes["form-block"]}>
           <p className={classes["form-title"]}>Create an account</p>
@@ -136,23 +175,24 @@ const CreateAccount = () => {
             <div className={emailClasses}>
               <label htmlFor="email">Email</label>
               <input value={emailValue} onChange={emailChangeHandler} onBlur={emailBlurHandler} id="email" type="text" placeholder="Email" />
-              {emailHasError && <p className={classes.errorMes}>Please enter a valid email address</p>}
+              {emailHasError && <p className={classes.errorMes}>Invalid email</p>}
             </div>
             <div className={passwordClasses}>
               <label htmlFor="password">Password</label>
               <input  value={passwordValue} onChange={passwordChangeHandler} onBlur={(e) => setPasswordForComparison.call(null, e)('pass1', passwordBlurHandler)} id="password" type="password" placeholder="Password" />
               {passwordHasError && <p className={classes.errorMes}>{passErrorMessage}</p>}
-              {passwordsNotIdentical && <p className={classes.identicalError}>Passwords should be identical</p>}
+              {passwordsNotIdentical && passwordsCorrect && <p className={classes.identicalError}>Passwords mismatch</p>}
             </div>
             <div className={repeatPasswordClasses}>
               <label htmlFor="resetpassword">Repeat password</label>
               <input value={repeatPassValue} onChange={repeatPassChangeHandler} onBlur={(e) => setPasswordForComparison.call(null, e)('pass2', repeatPassBlurHandler)} id="resetpassword" type="password" placeholder="Repeat password" />
               {repeatPassHasError && <p className={classes.errorMes}>{repeatPassErrorMessage}</p>}
-              {passwordsNotIdentical && <p className={classes.identicalError}>Passwords should be identical</p>}
+              {passwordsNotIdentical && passwordsCorrect && <p className={classes.identicalError}>Passwords mismatch</p>}
             </div>
-            <button disabled={!formIsValid} onClick={formValidation} className={classes["form-submit"]} type="submit">
+            <button  onClick={formValidation} className={classes["form-submit"]} type="submit">
               Create account
             </button>
+            {/*disabled={!formIsValid}*/}
 
             <div className={classes["login-block"]}>
               <p>Already have an account?</p>

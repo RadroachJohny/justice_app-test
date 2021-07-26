@@ -40,13 +40,23 @@
     border-radius: 3px;
     background: transparent;
   }
+  &.invalid {
+    & p {
+      color: red;
+    }
+    & > input {
+      border-color: rgb(216, 119, 119);
+    }
+  }
 }
 
-.invalid {
-  & p {
-    color: red;
-  }
-  & > input {
-    border-color: rgb(216, 119, 119);
-  }
+.errorMes {
+  position: absolute;
+  font-size: 11px;
+  width: 100%;
+  overflow:hidden;
 }
+
+
+
+

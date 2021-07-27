@@ -13,31 +13,83 @@ import {
 import { withStyles } from '@material-ui/core/styles';
 import { Animation } from '@devexpress/dx-react-chart';
 
+let salesArr = [];
+
+if(localStorage.getItem('salesList')) {
+    salesArr = JSON.parse(localStorage.getItem('salesList'));
+}
+
+const totalEarnings = salesArr.reduce((acc, elem) => {
+    return acc + (elem.price *  elem.remains);
+}, 10)
+
+const totalSum = totalEarnings;
+
+console.log(totalSum);
 
 
-export const data = [
-    {
-        year: 1993, military: 32,
-    }, {
-        year: 1995, military: 33,
-    }, {
-        year: 1997, military: 30,
-    }, {
-        year: 1999, military: 34,
-    }, {
-        year: 2001, military: 33,
-    }, {
-        year: 2003, military: 30,
-    }, {
-        year: 2006, military: 32,
-    }, {
-        year: 2008, military: 30,
-    }, {
-        year: 2010, military: 32,
-    }, {
-        year: 2012, military: 33,
-    },
-];
+const testDateArr = salesArr.map(elem => {
+    const sellDateMinutes = elem.id;
+   return {...elem, totalSumSold: elem.price * elem.remains, minutesPassed: Math.floor((elem.id/(1000*60)))}
+});
+
+// export const data = [];
+
+export const data = testDateArr.sort((a, b) => {
+    return a.minutesPassed - b.minutesPassed;
+})
+
+console.log(data.length);
+
+
+function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+
+
+
+
+
+// export const data = [
+//     {hours: 5, totalEarned: 160},
+//     {hours: 7, totalEarned: 247},
+//     {hours: 12, totalEarned: 50},
+//     {hours: 25, totalEarned: 180},
+//     {hours: 32, totalEarned: 312},
+// ]
+
+
+
+
+
+// console.log(data);
+
+
+
+// export const data = [
+//     {
+//         year: 1993, military: 32,
+//     }, {
+//         year: 1995, military: 33,
+//     }, {
+//         year: 1997, military: 30,
+//     }, {
+//         year: 1999, military: 34,
+//     }, {
+//         year: 2001, military: 33,
+//     }, {
+//         year: 2003, military: 30,
+//     }, {
+//         year: 2006, military: 32,
+//     }, {
+//         year: 2008, military: 30,
+//     }, {
+//         year: 2010, military: 32,
+//     }, {
+//         year: 2012, military: 33,
+//     },
+// ];
 
 const format = () => tick => tick;
 const legendStyles = () => ({
@@ -131,12 +183,17 @@ class Demo extends React.PureComponent {
                     {/*    labelComponent={ValueLabel}*/}
                     {/*/>*/}
 
-                    <LineSeries
+                    {data.length > 0 && <LineSeries
                         className='line-height100'
-                        name="$106,000"
-                        valueField="military"
-                        argumentField="year"
-                    />
+                        // name='$106.000'
+                        // name='10000'
+                        name={`$${numberWithCommas(totalSum)}`}
+                        valueField="totalSumSold"
+                        argumentField="minutesPassed"
+                        // valueField="totalEarned"
+                        // argumentField="hours"
+                    />}
+                    {data.length === 0 && <p className='noData'>No Data</p>}
                     <Legend position="bottom" rootComponent={Root} itemComponent={Item} labelComponent={Label} />
                     <Title
                         text={`Total earned`}

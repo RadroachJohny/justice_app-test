@@ -50,6 +50,9 @@ const ProductModal = (props) => {
 
         const dt = new Date();
 
+        const month = dt.getMonth() < 10 ? `0${dt.getMonth() + 1}` : dt.getMonth() + 1;
+        const day = dt.getDate() < 10 ? `0${dt.getDate()}` : dt.getDate();
+
         props.addItemProductList({
             store: store.current.value,
             price: price.current.value,
@@ -57,7 +60,7 @@ const ProductModal = (props) => {
             category: productCat.current.value,
             remains: quantity.current.value,
             weightVolume: weight.current.value,
-            creationDate: `${dt.getDate()}.${dt.getMonth() + 1}.${dt.getFullYear()}`,
+            creationDate: `${dt.getFullYear()}.${month}.${day}`,
             id: +Date.now(),
         })
 

@@ -19,6 +19,7 @@ const data = [
     { year: 'Fri', population: 175 },
     { year: 'Sat', population: 600 },
     { year: 'Sun', population: 350 },
+    { year: 'Sup', population: 350 },
 ];
 
 class Demo extends React.PureComponent {
@@ -39,7 +40,7 @@ class Demo extends React.PureComponent {
                     data={chartData}
                 >
                     <ArgumentAxis />
-                    <ValueAxis tickSize={7} showGrid={false} />
+                    <ValueAxis tickSize={10} showGrid={false} />
 
                     <BarSeries
                         valueField="population"

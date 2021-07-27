@@ -7,10 +7,6 @@ import ProductModal from './components/ProductModal/ProductModal';
 import SignIn from './components/SignIn/SignIn';
 import CreateAccount from "./components/CreateAcc/CreateAccount";
 
-import {itemsArr} from './ProductData/ProductData';
-import {SalesArr} from './ProductData/ProductSales';
-
-
 function App() {
     const [itemsListArr, setItemsListArr] = useState([]);
     const [salesListArr, setSalesListArr] = useState([]);
@@ -121,8 +117,6 @@ function App() {
         //Close Edit Product Modal
         editProductModal();
     };
-
-    console.log(userLoggedIn);
 
     return (
         <>

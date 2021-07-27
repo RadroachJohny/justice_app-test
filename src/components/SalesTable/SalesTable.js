@@ -9,12 +9,12 @@ import MainNavigation from "../MainNavigation/MainNavigation";
 
 
 const SalesTable = (props) => {
-    const [itemsArrState, setItemsArr] = useState(props.itemsList);
-
-    const deleteItemFromSalesList = (id) => {
-        const newArr = itemsArrState.filter((elem) => elem.id !== id);
-        setItemsArr(newArr)
-    };
+    // const [itemsArrState, setItemsArr] = useState(props.itemsList);
+    //
+    // const deleteItemFromSalesList = (id) => {
+    //     const newArr = itemsArrState.filter((elem) => elem.id !== id);
+    //     setItemsArr(newArr)
+    // };
 
     return (
         <>

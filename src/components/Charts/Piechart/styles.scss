@@ -1,5 +1,7 @@
 .height100 {
   height: 100%;
+  position: relative;
+  position: relative;
 }
 
 .fit {
@@ -9,10 +11,6 @@
   grid-template-columns: repeat(2, 1fr);
   height: 100% !important;
   padding: 32px !important;
-  //place-items: center;
-  //flex-direction: row !important;
-  //flex-wrap: wrap;
-  //justify-content: space-between;
 }
 
 #piechart {
@@ -77,4 +75,15 @@
     line-height: 14px;
   }
 
+}
+
+.noData {
+  position: absolute;
+  font-size: 30px;
+  margin: 0;
+  padding: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-weight: bold;
 }

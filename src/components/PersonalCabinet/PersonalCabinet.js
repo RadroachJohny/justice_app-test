@@ -8,22 +8,15 @@ const isEnoughSymbols = (value) => value.trim().length > 5;
 
 
 const PersonalCabinet = () => {
-    // const userInfo = JSON.parse(localStorage.getItem('currentUser')) || {};
-
-
-
     const [currUser, setCurrUser] = useState(JSON.parse(localStorage.getItem('currentUser')) || {});
-
     const [passwordsIdentical, setPasswordsIdentical] = useState(true);
     const [oldPassFieldValue, setOldPassFieldValue] = useState('');
+
     const productCatVal = useRef();
     const addressVal = useRef();
     const oldPass = useRef();
 
-
     const {firstName = '', lastName = '', companyName = '', email = '', productCat = '', address = '', passwordValue = ''} = currUser;
-
-    console.log('Recalc')
 
     const {
         value: firsNameVal,
@@ -118,7 +111,6 @@ const PersonalCabinet = () => {
             return;
         }
 
-        console.log('finish');
         const newUserData = {
             firstName: firsNameVal,
             lastName: lasNameVal,
@@ -145,7 +137,7 @@ const PersonalCabinet = () => {
     const companyNameClasses = companyNameHasError ? `${classes["input-block"]} ${classes["invalid"]}` : `${classes["input-block"]}`;
     const newPassword = newPassHasError ? `${classes["input-block"]} ${classes["invalid"]}` : `${classes["input-block"]}`;
     const productCategoryName = productCatHasError ? `${classes["input-block"]} ${classes["invalid"]}` : `${classes["input-block"]}`;
-    const AddressName = addressHasError ? `${classes["input-block"]} ${classes["invalid"]}` : `${classes["input-block"]}`;
+    const addressName = addressHasError ? `${classes["input-block"]} ${classes["invalid"]} ${classes['wide']}` : `${classes['wide']} ${classes["input-block"]}`;
 
     //Compare objects
     // JSON.stringify(obj1) === JSON.stringify(obj2)
@@ -175,7 +167,7 @@ const PersonalCabinet = () => {
                 <input onChange={productCatChangeHandler} onBlur={productCatBlurHandler} value={productCatValue} id='productCategory' type="text" placeholder='Product Category' ref={productCatVal}/>
                 {productCatHasError && <p className={classes.errorMes}>Should be more than 5 letters</p>}
             </div>
-            <div className={`${classes['input-block']} ${classes['wide']}`}>
+            <div className={addressName}>
                 <label htmlFor="address">Address</label>
                 <input onChange={addressChangeHandler} onBlur={addressBlurHandler} value={addressValue} id='address' type="text" placeholder='Address' ref={addressVal}/>
                 {addressHasError && <p className={classes.errorMes}>Should be more than 5 letters</p>}

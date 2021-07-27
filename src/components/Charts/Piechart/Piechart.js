@@ -1,4 +1,5 @@
 import './styles.scss';
+
 import { Legend } from '@devexpress/dx-react-chart-material-ui';
 
 
@@ -14,12 +15,15 @@ import {
 } from '@devexpress/dx-react-chart-material-ui';
 import { Animation } from '@devexpress/dx-react-chart';
 
-const data = [
-    { country: 'Canada', area: 7 },
-    { country: 'USA', area: 7 },
-    { country: 'Australia', area: 5 },
-    { country: 'Others', area: 55 },
-];
+const productArr = JSON.parse(localStorage.getItem('productList'));
+const data = productArr.splice(-4) || [];
+
+// const data = [
+//     { country: 'Canada', area: 7 },
+//     { country: 'USA', area: 7 },
+//     { country: 'Australia', area: 5 },
+//     { country: 'Others', area: 55 },
+// ];
 
 
 const legendStyles = () => ({
@@ -70,23 +74,32 @@ class Piechart extends React.PureComponent {
         const { data: chartData } = this.state;
 
         return (
+            <>
+
             <Paper className='height100'>
                 <Chart className='fit'
                     data={chartData}
                 >
+
                     <Title
                         text="Sales schedule by day"
                     />
+
                     <PieSeries
-                        valueField="area"
-                        argumentField="country"
+                        valueField="remains"
+                        // valueField="area"
+                        argumentField="productName"
+                        // argumentField="country"
                     />
+
 
                     <Animation />
                     <Legend position="bottom" rootComponent={Root} itemComponent={Item} labelComponent={Label}/>
+                    {!data.length && <p className='noData'>No Data</p>}
                 </Chart>
 
             </Paper>
+            </>
 
         );
     }

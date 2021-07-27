@@ -28,16 +28,13 @@ const usePassword = () => {
 
   const valueChangeHandler = (event) => {
     if(event) {
-      console.log('01');
       setEnteredValue(event.target.value);
     } else if (!isTouched) {
-      console.log('02');
       setEnteredValue('');
       setIsTouched(true);
     }
 
   }
-  console.log(enteredValue);
 
   const inputBlurHandler = (event) => {
     setIsTouched(true);

@@ -10,6 +10,7 @@ const MainNavigation = () => {
 
     const logOut = () => {
       localStorage.setItem('isLoggedIn', JSON.stringify(false));
+      localStorage.removeItem('currentUser');
         setSignedIn(false);
 
     };

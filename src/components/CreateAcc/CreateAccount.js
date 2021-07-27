@@ -116,25 +116,21 @@ const CreateAccount = () => {
       lastName: lastNameValue,
       companyName: companyNameValue,
       email: emailValue,
-      passwordValue
+      passwordValue,
+      id: Date.now(),
     }
 
     if (localStorage.getItem('users')) {
-      console.log(1)
       const usersArr = JSON.parse(localStorage.getItem('users'));
       usersArr.push(userData);
-      console.log(usersArr);
       localStorage.setItem('users', JSON.stringify(usersArr))
       setIsCreated(true)
       localStorage.setItem('isCreated', JSON.stringify(true))
-      // history.push('/sign-in');
     } else {
-      console.log(2)
       const userArr = [userData];
       localStorage.setItem('users', JSON.stringify(userArr))
       setIsCreated(true)
       localStorage.setItem('isCreated', JSON.stringify(true))
-      // history.push('/sign-in');
     }
 
   };

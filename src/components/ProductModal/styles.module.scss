@@ -22,8 +22,9 @@
   &-form {
     display: flex;
     flex-direction: column;
-    & > input {
+    & input {
       margin-bottom: 24px;
+      width: 100%;
       padding: 16px;
       border: 1px solid rgba(43, 56, 68, 0.25);
       border-radius: 3px;
@@ -60,3 +61,29 @@
     cursor: pointer;
   }
 }
+
+.inputWrapper.texterror,
+.inputWrapper.numerror {
+  position: relative;
+  & input {
+    border-color: red;
+  }
+  &::after {
+    position: absolute;
+    display: block;
+
+    bottom: 2px;
+    left: 0;
+    color: red;
+    font-size: 12px;
+  }
+}
+.inputWrapper.texterror::after {
+  content: 'Not less than 5 symbols';
+}.inputWrapper.numerror::after {
+   content: 'Only valid numbers allowed';
+}
+
+
+
+

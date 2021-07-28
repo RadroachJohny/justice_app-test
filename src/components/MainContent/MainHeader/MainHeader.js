@@ -1,5 +1,5 @@
-import classes from './styles.module.scss';
 import CreateProductBtn from "../../CreateProductBtn/CreateProductBtn";
+import classes from './styles.module.scss';
 
 const MainHeader = (props) => {
 

@@ -1,6 +1,7 @@
-import classes from "./styles.module.scss";
 import pencil from "../../../assets/images/pencil.svg";
 import cross from "../../../assets/images/delete.svg";
+
+import classes from "./styles.module.scss";
 
 const SalesTableBody = (props) => {
 

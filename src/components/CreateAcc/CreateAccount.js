@@ -1,16 +1,14 @@
 import { useState, useEffect } from "react";
-import { Redirect }  from 'react-router-dom';
+import { Redirect, Link }  from "react-router-dom";
 
 import useInput from "../hooks/use-input";
 import usePassword from "../hooks/use-password";
 
-import classes from "./styles.module.scss";
-
 import banner from "../../assets/images/banner.jpg";
+import classes from "./styles.module.scss";
 
 const isEnoughSymbols = (value) => value.trim().length > 5;
 const isEmail = (value) => value.match(/^[a-zA-Z0-9]+@[a-z]{3,12}\.[a-z]+/);
-// const isEmail = (value) => value.includes("@");
 
 const CreateAccount = () => {
   const [passwords, setPasswords] = useState({pass1: '', pass2: ''});
@@ -87,21 +85,14 @@ const CreateAccount = () => {
 
   const passwordsCorrect = !passwordHasError && !repeatPassHasError;
 
-  const formValidation = (e) => {
+  const formSubmit = (e) => {
     e.preventDefault();
 
-    firstNameBlurHandler();
-    lastNameBlurHandler();
-    companyNameBlurHandler();
-    emailBlurHandler();
-    passwordChangeHandler();
-    repeatPassChangeHandler();
-
-
     if (!formIsValid || passwordsNotIdentical) {
+      console.log(formIsValid);
+      console.log(passwordsNotIdentical);
       return;
     }
-
 
     resetFirstName();
     resetLastName();
@@ -133,6 +124,16 @@ const CreateAccount = () => {
       localStorage.setItem('isCreated', JSON.stringify(true))
     }
 
+
+  }
+
+  const formValidation = (e) => {
+    firstNameBlurHandler();
+    lastNameBlurHandler();
+    companyNameBlurHandler();
+    emailBlurHandler();
+    passwordChangeHandler();
+    repeatPassChangeHandler();
   };
 
   const setPasswordForComparison = (e) => (pass, blurHandler) => {
@@ -140,6 +141,18 @@ const CreateAccount = () => {
     setPasswords((prev) => {
       return {...prev, [pass]: e.target.value}
     })
+  };
+
+  const testChangeHandler = (e, handler) => {
+    if(passwordsNotIdentical) {
+      setPasswordsNotIdentical(false);
+    }
+    handler(e);
+
+  };
+
+  const addIsCreatedUser = () => {
+    localStorage.setItem('isCreated', JSON.stringify(true));
   };
 
 
@@ -150,51 +163,82 @@ const CreateAccount = () => {
         <div className={classes["form-block"]}>
           <p className={classes["form-title"]}>Create an account</p>
 
-          <form  className={classes.form}>
+          <form onSubmit={formSubmit}  className={classes.form}>
             <div className={classes["username-block"]}>
               <div className={firstNameClasses}>
                 <label htmlFor="firstName">First name</label>
-                <input value={firstNameValue} onChange={firstNameChangeHandler} onBlur={firstNameBlurHandler} id="firstName" type="text" placeholder="First name" />
+                <input 
+                value={firstNameValue} 
+                onChange={firstNameChangeHandler} 
+                onBlur={firstNameBlurHandler} 
+                id="firstName" type="text" 
+                placeholder="First name" />
                 {firstNameHasError && <p className={classes.errorMes}>Should be more than 5 letters</p>}
               </div>
               <div className={lastNameClasses}>
                 <label htmlFor="lastName">Last name</label>
-                <input value={lastNameValue} onChange={lastNameChangeHandler} onBlur={lastNameBlurHandler} id="lastName" type="text" placeholder="Last name" />
+                <input 
+                value={lastNameValue} 
+                onChange={lastNameChangeHandler} 
+                onBlur={lastNameBlurHandler} 
+                id="lastName" type="text" 
+                placeholder="Last name" />
                 {lastNameHasError && <p className={classes.errorMes}>Should be more than 5 letters</p>}
               </div>
             </div>
             <div className={companyNameClasses}>
               <label htmlFor="companyName">Company name</label>
-              <input value={companyNameValue} onChange={companyNameChangeHandler} onBlur={companyNameBlurHandler} id="companyName" type="text" placeholder="Company name" />
+              <input 
+              value={companyNameValue} 
+              onChange={companyNameChangeHandler} 
+              onBlur={companyNameBlurHandler} 
+              id="companyName" type="text" 
+              placeholder="Company name" />
               {companyNameHasError && <p className={classes.errorMes}>Should be more than 5 letters</p>}
             </div>
             <div className={emailClasses}>
               <label htmlFor="email">Email</label>
-              <input value={emailValue} onChange={emailChangeHandler} onBlur={emailBlurHandler} id="email" type="text" placeholder="Email" />
+              <input 
+              value={emailValue} 
+              onChange={emailChangeHandler} 
+              onBlur={emailBlurHandler} 
+              id="email" type="text" 
+              placeholder="Email" />
               {emailHasError && <p className={classes.errorMes}>Invalid email</p>}
             </div>
             <div className={passwordClasses}>
               <label htmlFor="password">Password</label>
-              <input  value={passwordValue} onChange={passwordChangeHandler} onBlur={(e) => setPasswordForComparison.call(null, e)('pass1', passwordBlurHandler)} id="password" type="password" placeholder="Password" />
+              <input  
+              value={passwordValue} 
+              onChange={(e) => testChangeHandler(e, passwordChangeHandler)} 
+              onBlur={(e) => setPasswordForComparison.call(null, e)('pass1', passwordBlurHandler)} 
+              id="password" 
+              type="text" 
+              placeholder="Password" />
               {passwordHasError && <p className={classes.errorMes}>{passErrorMessage}</p>}
               {passwordsNotIdentical && passwordsCorrect && <p className={classes.identicalError}>Passwords mismatch</p>}
             </div>
             <div className={repeatPasswordClasses}>
               <label htmlFor="resetpassword">Repeat password</label>
-              <input value={repeatPassValue} onChange={repeatPassChangeHandler} onBlur={(e) => setPasswordForComparison.call(null, e)('pass2', repeatPassBlurHandler)} id="resetpassword" type="password" placeholder="Repeat password" />
+              <input 
+              value={repeatPassValue} 
+              onChange={(e) => testChangeHandler(e, repeatPassChangeHandler)} 
+              onBlur={(e) => setPasswordForComparison.call(null, e)('pass2', repeatPassBlurHandler)} 
+              id="resetpassword" 
+              type="text" 
+              placeholder="Repeat password" />
               {repeatPassHasError && <p className={classes.errorMes}>{repeatPassErrorMessage}</p>}
               {passwordsNotIdentical && passwordsCorrect && <p className={classes.identicalError}>Passwords mismatch</p>}
             </div>
             <button  onClick={formValidation} className={classes["form-submit"]} type="submit">
               Create account
             </button>
-            {/*disabled={!formIsValid}*/}
 
             <div className={classes["login-block"]}>
               <p>Already have an account?</p>
-              <a className={classes.login} href="www.random.com">
+              <Link onClick={addIsCreatedUser} className={classes.login} to="/sign-in">
                 Log in
-              </a>
+              </Link>
             </div>
           </form>
         </div>

@@ -1,156 +1,156 @@
-import {Route, Redirect} from 'react-router-dom';
 import {useState, useEffect} from 'react';
+import {Route, Redirect} from 'react-router-dom';
 
-import './App.css';
 import MainContent from './components/MainContent/MainContent';
 import ProductModal from './components/ProductModal/ProductModal';
 import SignIn from './components/SignIn/SignIn';
 import CreateAccount from "./components/CreateAcc/CreateAccount";
 
+import './App.css';
+
 function App() {
-    const [itemsListArr, setItemsListArr] = useState([]);
-    const [salesListArr, setSalesListArr] = useState([]);
+	const [itemsListArr, setItemsListArr] = useState([]);
+	const [salesListArr, setSalesListArr] = useState([]);
 
-    const [createProductModalShow, setCreateProductModalShow] = useState(false);
+	const [createProductModalShow, setCreateProductModalShow] = useState(false);
+	const [editProductModalId, setEditProductModalId] = useState(null);
 
-    const [editProductModalId, setEditProductModalId] = useState(null);
+	let userLoggedIn = false;
+	if (JSON.parse(localStorage.getItem('isCreated')) && JSON.parse(localStorage.getItem('isLoggedIn'))) {
+		userLoggedIn = true;
+	}
 
-    let userLoggedIn = false;
+	useEffect(() => {
+		if (localStorage.getItem('productList')) {
+			const arrFromStorage = JSON.parse(localStorage.getItem('productList'));
+			setItemsListArr(arrFromStorage);
+		}
+	}, [setItemsListArr]);
 
-    if(JSON.parse(localStorage.getItem('isCreated')) && JSON.parse(localStorage.getItem('isLoggedIn'))) {
-        userLoggedIn = true;
-    }
+	useEffect(() => {
+		if (localStorage.getItem('salesList')) {
+			const arrFromStorage = JSON.parse(localStorage.getItem('salesList'));
+			setSalesListArr(arrFromStorage);
+		}
+	}, [setSalesListArr]);
 
-    const saleItemHandler = (id) => {
-        const chosenElemForSale = itemsListArr.find((elem) => elem.id === id);
-        const dt = new Date();
-        const month = dt.getMonth() < 10 ? `0${dt.getMonth() + 1}` : dt.getMonth() + 1;
-        const day = dt.getDate() < 10 ? `0${dt.getDate()}` : dt.getDate();
+  const saleItemHandler = (id) => {
+		const chosenElemForSale = itemsListArr.find((elem) => elem.id === id);
 
-        chosenElemForSale.saleDate = `${dt.getFullYear()}.${month}.${day+1}`;
-        //Delete item from My Products list and Local Storage
-        deleteItemFromItemsList(id);
-        //Add newly added elem to sell list
-        setSalesListArr(prev => {
-            return [...prev, chosenElemForSale];
-        })
-        //Add that new elem to local storage
-        addSaleslistToLocalStorage(chosenElemForSale);
-    }
+		const dt = new Date();
+		const month = dt.getMonth() < 10 ? `0${dt.getMonth() + 1}` : dt.getMonth() + 1;
+		const day = dt.getDate() < 10 ? `0${dt.getDate()}` : dt.getDate();
+		chosenElemForSale.saleDate = `${dt.getFullYear()}.${month}.${day}`;
+		deleteItemFromItemsList(id);
+		setSalesListArr(prev => {
+			return [...prev, chosenElemForSale];
+		})
+		addSaleslistToLocalStorage(chosenElemForSale);
+	}
 
-    //Get Data for ProductList
-    useEffect(() => {
-        if (localStorage.getItem('productList')) {
-            const arrFromStorage = JSON.parse(localStorage.getItem('productList'));
-            setItemsListArr(arrFromStorage);
-        }
-    }, [setItemsListArr]);
+	const addItemlistToLocalStorage = (arr) => {
+		let oldArrFromLocalStorage = JSON.parse(localStorage.getItem('productList')) || [];
+		oldArrFromLocalStorage.push(arr);
+		localStorage.setItem('productList', JSON.stringify(oldArrFromLocalStorage));
+	};
 
-    //Get Data for SalesList
-    useEffect(() => {
-        if (localStorage.getItem('salesList')) {
-            const arrFromStorage = JSON.parse(localStorage.getItem('salesList'));
-            setSalesListArr(arrFromStorage);
-        }
-    }, [setSalesListArr]);
+	const addSaleslistToLocalStorage = (arr) => {
+		const oldArrFromLocalStorage = JSON.parse(localStorage.getItem('salesList')) || [];
+		oldArrFromLocalStorage.push(arr);
+		localStorage.setItem('salesList', JSON.stringify(oldArrFromLocalStorage));
+	};
 
+	const deleteItemFromItemsList = (id) => {
+		const newArr = itemsListArr.filter((elem) => elem.id !== id);
+		localStorage.setItem('productList', JSON.stringify(newArr));
+		setItemsListArr(newArr);
+	};
 
-    //Add new item from Product List to Local Storage
-    const addItemlistToLocalStorage = (arr) => {
-        let oldArrFromLocalStorage = JSON.parse(localStorage.getItem('productList')) || [];
-        oldArrFromLocalStorage.push(arr);
-        localStorage.setItem('productList', JSON.stringify(oldArrFromLocalStorage));
-    };
+	const addNewProductToItemsList = (obj) => {
+		setItemsListArr((prev) => {
+			return [...prev, obj]
+		});
+		addItemlistToLocalStorage(obj);
 
-    //Add element transfered to 'My Sales' in Local storage
-    const addSaleslistToLocalStorage = (arr) => {
-        const oldArrFromLocalStorage = JSON.parse(localStorage.getItem('salesList')) || [];
-        oldArrFromLocalStorage.push(arr);
-        localStorage.setItem('salesList', JSON.stringify(oldArrFromLocalStorage));
-    };
+		createProductModal();
+	}
 
+	const createProductModal = () => {
+		setCreateProductModalShow((prev) => !prev);
+	};
 
-    //Delete item from My Products list and Local Storage
-    const deleteItemFromItemsList = (id) => {
-        const newArr = itemsListArr.filter((elem) => elem.id !== id);
-        localStorage.setItem('productList', JSON.stringify(newArr));
-        setItemsListArr(newArr);
-    };
+	const editProductModal = () => {
+		setEditProductModalId(null);
+	};
 
-    //Add new elem to My Products list and Local Storage
-    const addNewProductToItemsList = (obj) => {
-        setItemsListArr((prev) => {
-            return [...prev, obj]
-        });
-        addItemlistToLocalStorage(obj);
+	const edit = (id) => {
+		setEditProductModalId(id);
+	};
 
-        //Close Modal
-        createProductModal();
-    }
+	const editField = (obj, id) => {
+		const arrWithEditedField = itemsListArr.map((elem) => {
+			if (elem.id === id) {
+				return obj;
+			} else {
+				return elem;
+			}
+		});
 
-    //Open create product modal
-    const createProductModal = () => {
-        setCreateProductModalShow((prev) => !prev);
-    };
+		localStorage.setItem('productList', JSON.stringify(arrWithEditedField));
+		setItemsListArr(arrWithEditedField);
 
-    //Close edit product modal
-    const editProductModal = () => {
-        setEditProductModalId(null);
-    };
+		editProductModal();
+	};
 
-    //Open Edit modal and push id in it
-    const edit = (id) => {
-        setEditProductModalId(id);
-    };
+	return (
+		<>
+			{!userLoggedIn && <Redirect to={'/create-account'}/>}
 
+			<div className="App">
 
-    //Edit elem in My Products list
-    const editField = (obj, id) => {
-        const arrWithEditedField = itemsListArr.map((elem) => {
-            if (elem.id === id) {
-                return obj;
-            } else {
-                return elem;
-            }
-        });
+				<Route path='/' exact>
+					<Redirect to='main-page'/>
+				</Route>
 
-        localStorage.setItem('productList', JSON.stringify(arrWithEditedField));
-        setItemsListArr(arrWithEditedField);
+				<MainContent
+					sale={saleItemHandler}
+					itemsList={itemsListArr}
+					salesList={salesListArr}
+					edit={edit}
+					onDelete={deleteItemFromItemsList}
+					modalShow={createProductModal}
+				/>
 
-        //Close Edit Product Modal
-        editProductModal();
-    };
+				<Route path='/create-account'>
+					<CreateAccount/>
+				</Route>
 
-    return (
-        <>
-        {!userLoggedIn && <Redirect to={'/create-account'} />}
+				<Route path='/sign-in'>
+					<SignIn/>
+				</Route>
 
-        <div className="App">
+				{createProductModalShow &&
+				<ProductModal 
+        addToStorage={addItemlistToLocalStorage} 
+        addItemProductList={addNewProductToItemsList}
+        modalClose={createProductModal} 
+        formHeader={'Creating a Product'}
+        btnText={'Add Product'}
+        />}
 
-            <Route path='/' exact>
-                <Redirect to='main-page'/>
-            </Route>
-
-            <MainContent sale={saleItemHandler} itemsList={itemsListArr} salesList={salesListArr} edit={edit}
-                         onDelete={deleteItemFromItemsList} modalShow={createProductModal}/>
-
-            <Route path='/create-account'>
-                <CreateAccount/>
-            </Route>
-            <Route path='/sign-in'>
-                <SignIn/>
-            </Route>
-
-            {createProductModalShow &&
-            <ProductModal addToStorage={addItemlistToLocalStorage} addItemProductList={addNewProductToItemsList}
-                          modalClose={createProductModal} formHeader={'Creating a Product'} btnText={'Add Product'}/>}
-
-            {editProductModalId && <ProductModal edit={editField} itemsList={itemsListArr} id={editProductModalId}
-                                                 modalClose={editProductModal} formHeader={'Editing a Product'}
-                                                 btnText={'Save Changes'}/>}
-        </div>
-        </>
-    );
+				{editProductModalId &&
+				<ProductModal
+					edit={editField}
+					itemsList={itemsListArr}
+					id={editProductModalId}
+					modalClose={editProductModal}
+					formHeader={'Editing a Product'}
+					btnText={'Save Changes'}
+				/>
+				}
+			</div>
+		</>
+	);
 }
 
 export default App;

@@ -1,23 +1,18 @@
-import './styles.scss';
-
-import { Legend } from '@devexpress/dx-react-chart-material-ui';
-
-
-import { withStyles } from '@material-ui/core/styles';
-
+import {Legend} from '@devexpress/dx-react-chart-material-ui';
+import {withStyles} from '@material-ui/core/styles';
 
 import * as React from 'react';
 import Paper from '@material-ui/core/Paper';
 import {
-    Chart,
-    PieSeries,
-    Title,
+	Chart,
+	PieSeries,
+	Title,
 } from '@devexpress/dx-react-chart-material-ui';
-import { Animation } from '@devexpress/dx-react-chart';
+import {Animation} from '@devexpress/dx-react-chart';
 
-const productArr = JSON.parse(localStorage.getItem('productList')) || [];
-const data = productArr.splice(-4);
+import './styles.scss';
 
+//Template
 // const data = [
 //     { country: 'Canada', area: 7 },
 //     { country: 'USA', area: 7 },
@@ -27,82 +22,70 @@ const data = productArr.splice(-4);
 
 
 const legendStyles = () => ({
-    root: {
-        display: 'flex',
-        margin: 'auto',
-        flexDirection: 'row',
-    },
+	root: {
+		display: 'flex',
+		margin: 'auto',
+		flexDirection: 'row',
+	},
 });
 const legendLabelStyles = theme => ({
-    label: {
-        paddingTop: theme.spacing(1),
-        whiteSpace: 'nowrap',
-    },
+	label: {
+		paddingTop: theme.spacing(1),
+		whiteSpace: 'nowrap',
+	},
 });
 const legendItemStyles = () => ({
-    item: {
-        flexDirection: 'column',
-    },
+	item: {
+		flexDirection: 'column',
+	},
 });
 
-const legendRootBase = ({ classes, ...restProps }) => (
-    <Legend.Root {...restProps} className={classes.root} />
+const legendRootBase = ({classes, ...restProps}) => (
+	<Legend.Root {...restProps} className={classes.root}/>
 );
-const legendLabelBase = ({ classes, ...restProps }) => (
-    <Legend.Label className={classes.label} {...restProps} />
+const legendLabelBase = ({classes, ...restProps}) => (
+	<Legend.Label className={classes.label} {...restProps} />
 );
-const legendItemBase = ({ classes, ...restProps }) => (
-    <Legend.Item className={classes.item} {...restProps} />
+const legendItemBase = ({classes, ...restProps}) => (
+	<Legend.Item className={classes.item} {...restProps} />
 );
-const Root = withStyles(legendStyles, { name: 'LegendRoot' })(legendRootBase);
-const Label = withStyles(legendLabelStyles, { name: 'LegendLabel' })(legendLabelBase);
-const Item = withStyles(legendItemStyles, { name: 'LegendItem' })(legendItemBase);
+const Root = withStyles(legendStyles, {name: 'LegendRoot'})(legendRootBase);
+const Label = withStyles(legendLabelStyles, {name: 'LegendLabel'})(legendLabelBase);
+const Item = withStyles(legendItemStyles, {name: 'LegendItem'})(legendItemBase);
 
 
+const Piechart = (props) => {
+	const data = [...props.itemsList];
+	const chartData = data.splice(-4);
 
+	console.log(chartData);
 
-class Piechart extends React.PureComponent {
-    constructor(props) {
-        super(props);
+	return (
+		<>
 
-        this.state = {
-            data,
-        };
-    }
+			<Paper className='height100'>
+          {chartData.length >= 2 &&<Chart className='fit'
+							 data={chartData}
+				>
 
-    render() {
-        const { data: chartData } = this.state;
+					<Title
+						text="Sales schedule by day"
+					/>
 
-        return (
-            <>
+					<PieSeries
+						valueField="remains"
+						argumentField="productName"
+					/>
 
-            <Paper className='height100'>
-                <Chart className='fit'
-                    data={chartData}
-                >
+					<Animation/>
+					<Legend position="bottom" rootComponent={Root} itemComponent={Item} labelComponent={Label}/>
 
-                    <Title
-                        text="Sales schedule by day"
-                    />
+				</Chart>}
+          {chartData.length < 2 && <p className='noData'>No Data</p>}
+			</Paper>
+		</>
 
-                    <PieSeries
-                        valueField="remains"
-                        // valueField="area"
-                        argumentField="productName"
-                        // argumentField="country"
-                    />
-
-
-                    <Animation />
-                    <Legend position="bottom" rootComponent={Root} itemComponent={Item} labelComponent={Label}/>
-                    {!data.length && <p className='noData'>No Data</p>}
-                </Chart>
-
-            </Paper>
-            </>
-
-        );
-    }
+	);
 }
 
 export default Piechart;

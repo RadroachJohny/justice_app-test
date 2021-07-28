@@ -1,5 +1,6 @@
 .barchart {
   height: 100%;
+  position: relative;
   & #center-axis-container svg {
     & rect {
       fill: #5b6acd;

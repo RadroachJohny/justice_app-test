@@ -33,7 +33,6 @@ const usePassword = () => {
       setEnteredValue('');
       setIsTouched(true);
     }
-
   }
 
   const inputBlurHandler = (event) => {
@@ -53,10 +52,7 @@ const usePassword = () => {
     valueChangeHandler,
     inputBlurHandler,
     reset,
-
-
   };
-
 };
 
 export default usePassword;

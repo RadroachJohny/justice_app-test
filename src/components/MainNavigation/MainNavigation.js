@@ -1,9 +1,10 @@
-import { useState } from 'react';
-import {NavLink, Redirect} from 'react-router-dom';
+import { useState } from "react";
+import {NavLink, Redirect} from "react-router-dom";
 
-import classes from './styles.module.scss';
-import logo from '../../assets/images/Logo.svg';
+import logo from "../../assets/images/Logo.svg";
 import logoutArrow from "../../assets/images/logout-arrow.svg";
+
+import classes from "./styles.module.scss";
 
 const MainNavigation = () => {
     const [loggedIn, setSignedIn] = useState(true);
@@ -69,7 +70,7 @@ const MainNavigation = () => {
                         </NavLink>
                     </li>
                     <li className={classes['main-links__link']}>
-                        <NavLink activeClassName={classes['active-link']} to='personal-cabinet'>
+                        <NavLink activeClassName={classes['active-link']} to='/personal-cabinet'>
                             <svg width="18" height="20" viewBox="0 0 18 20" fill="none"
                                  xmlns="http://www.w3.org/2000/svg">
                                 <path
@@ -83,7 +84,9 @@ const MainNavigation = () => {
                         </NavLink>
                     </li>
                 </ul>
-                <button onClick={logOut} className={classes.logout}>
+                <button 
+                onClick={logOut} 
+                className={classes.logout}>
                     <img src={logoutArrow} alt="log out"/>
                     Log Out
                 </button>

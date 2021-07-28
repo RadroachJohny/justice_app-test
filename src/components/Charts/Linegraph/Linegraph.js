@@ -25,12 +25,9 @@ const totalEarnings = salesArr.reduce((acc, elem) => {
 
 const totalSum = totalEarnings;
 
-console.log(totalSum);
-
-
 const testDateArr = salesArr.map(elem => {
     const sellDateMinutes = elem.id;
-   return {...elem, totalSumSold: elem.price * elem.remains, minutesPassed: Math.floor((elem.id/(1000*60)))}
+    return {...elem, totalSumSold: elem.price * elem.remains, minutesPassed: Math.floor((elem.id/(1000*60)))}
 });
 
 // export const data = [];
@@ -38,8 +35,6 @@ const testDateArr = salesArr.map(elem => {
 export const data = testDateArr.sort((a, b) => {
     return a.minutesPassed - b.minutesPassed;
 })
-
-console.log(data.length);
 
 
 function numberWithCommas(x) {

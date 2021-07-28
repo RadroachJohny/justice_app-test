@@ -44,16 +44,16 @@ const ProductModal = (props) => {
 
     }
 
-    const formSubmit = (e) => {
-        console.log('form submit');
+    const dt = new Date();
+    const month = dt.getMonth() < 10 ? `0${dt.getMonth() + 1}` : dt.getMonth() + 1;
+    const day = dt.getDate() < 10 ? `0${dt.getDate()}` : dt.getDate();
+
+    const universalFunc = (e, actionArg) => {
         e.preventDefault();
 
         const dt = new Date();
 
-        const month = dt.getMonth() < 10 ? `0${dt.getMonth() + 1}` : dt.getMonth() + 1;
-        const day = dt.getDate() < 10 ? `0${dt.getDate()}` : dt.getDate();
-
-        props.addItemProductList({
+        props[actionArg]({
             store: store.current.value,
             price: price.current.value,
             productName: productName.current.value,
@@ -62,26 +62,43 @@ const ProductModal = (props) => {
             weightVolume: weight.current.value,
             creationDate: `${dt.getFullYear()}.${month}.${day}`,
             id: +Date.now(),
-        })
-
-    };
-
-    const editElem = (e) => {
-        e.preventDefault();
-
-        const dt = new Date();
-
-        props.edit({
-            store: store.current.value,
-            price: price.current.value,
-            productName: productName.current.value,
-            category: productCat.current.value,
-            remains: quantity.current.value,
-            weightVolume: weight.current.value,
-            creationDate: `${dt.getDate()}.${dt.getMonth() + 1}.${dt.getFullYear()}`,
-            id: +Date.now(),
         }, props.id)
     };
+
+    // const formSubmit = (e) => {
+    //     e.preventDefault();
+    //
+    //
+    //
+    //     props.addItemProductList({
+    //         store: store.current.value,
+    //         price: price.current.value,
+    //         productName: productName.current.value,
+    //         category: productCat.current.value,
+    //         remains: quantity.current.value,
+    //         weightVolume: weight.current.value,
+    //         creationDate: `${dt.getFullYear()}.${month}.${day}`,
+    //         id: +Date.now(),
+    //     })
+    //
+    // };
+    //
+    // const editElem = (e) => {
+    //     e.preventDefault();
+    //
+    //     const dt = new Date();
+    //
+    //     props.edit({
+    //         store: store.current.value,
+    //         price: price.current.value,
+    //         productName: productName.current.value,
+    //         category: productCat.current.value,
+    //         remains: quantity.current.value,
+    //         weightVolume: weight.current.value,
+    //         creationDate: `${dt.getFullYear()}.${month}.${day}`,
+    //         id: +Date.now(),
+    //     }, props.id)
+    // };
 
     console.log(defaultValues.store);
     return (
@@ -99,8 +116,11 @@ const ProductModal = (props) => {
                     <input ref={weight} type="text" placeholder='weight/ volume of one item' defaultValue={defaultValues.weightVolume}></input>
 
                     <button onClick={(e) => {
-                        return !props.id ? formSubmit(e) : editElem(e);
+                        return !props.id ? universalFunc(e, 'addItemProductList') : universalFunc(e, 'edit');
                     }} className={classes['modal-submit']} type='submit'>{props.btnText}</button>
+                    {/*<button onClick={(e) => {*/}
+                    {/*    return !props.id ? formSubmit(e) : editElem(e);*/}
+                    {/*}} className={classes['modal-submit']} type='submit'>{props.btnText}</button>*/}
                 </form>
             </div>
         </div>

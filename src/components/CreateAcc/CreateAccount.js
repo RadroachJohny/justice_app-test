@@ -10,7 +10,6 @@ import banner from "../../assets/images/banner.jpg";
 
 const isEnoughSymbols = (value) => value.trim().length > 5;
 const isEmail = (value) => value.match(/^[a-zA-Z0-9]+@[a-z]{3,12}\.[a-z]+/);
-// const isEmail = (value) => value.includes("@");
 
 const CreateAccount = () => {
   const [passwords, setPasswords] = useState({pass1: '', pass2: ''});
@@ -102,7 +101,6 @@ const CreateAccount = () => {
       return;
     }
 
-
     resetFirstName();
     resetLastName();
     resetCompanyName();
@@ -188,11 +186,10 @@ const CreateAccount = () => {
             <button  onClick={formValidation} className={classes["form-submit"]} type="submit">
               Create account
             </button>
-            {/*disabled={!formIsValid}*/}
 
             <div className={classes["login-block"]}>
               <p>Already have an account?</p>
-              <a className={classes.login} href="www.random.com">
+              <a className={classes.login} href="#">
                 Log in
               </a>
             </div>

@@ -1,9 +1,10 @@
+import {useState, useEffect} from 'react';
 import './styles.scss';
 
-import { Legend } from '@devexpress/dx-react-chart-material-ui';
+import {Legend} from '@devexpress/dx-react-chart-material-ui';
 
 
-import { withStyles } from '@material-ui/core/styles';
+import {withStyles} from '@material-ui/core/styles';
 
 
 import * as React from 'react';
@@ -13,11 +14,9 @@ import {
     PieSeries,
     Title,
 } from '@devexpress/dx-react-chart-material-ui';
-import { Animation } from '@devexpress/dx-react-chart';
+import {Animation} from '@devexpress/dx-react-chart';
 
-const productArr = JSON.parse(localStorage.getItem('productList'));
-const data = productArr.splice(-4) || [];
-
+//Template
 // const data = [
 //     { country: 'Canada', area: 7 },
 //     { country: 'USA', area: 7 },
@@ -45,40 +44,30 @@ const legendItemStyles = () => ({
     },
 });
 
-const legendRootBase = ({ classes, ...restProps }) => (
-    <Legend.Root {...restProps} className={classes.root} />
+const legendRootBase = ({classes, ...restProps}) => (
+    <Legend.Root {...restProps} className={classes.root}/>
 );
-const legendLabelBase = ({ classes, ...restProps }) => (
+const legendLabelBase = ({classes, ...restProps}) => (
     <Legend.Label className={classes.label} {...restProps} />
 );
-const legendItemBase = ({ classes, ...restProps }) => (
+const legendItemBase = ({classes, ...restProps}) => (
     <Legend.Item className={classes.item} {...restProps} />
 );
-const Root = withStyles(legendStyles, { name: 'LegendRoot' })(legendRootBase);
-const Label = withStyles(legendLabelStyles, { name: 'LegendLabel' })(legendLabelBase);
-const Item = withStyles(legendItemStyles, { name: 'LegendItem' })(legendItemBase);
+const Root = withStyles(legendStyles, {name: 'LegendRoot'})(legendRootBase);
+const Label = withStyles(legendLabelStyles, {name: 'LegendLabel'})(legendLabelBase);
+const Item = withStyles(legendItemStyles, {name: 'LegendItem'})(legendItemBase);
 
 
+const Piechart = (props) => {
+    const data = [...props.itemsList];
+    const chartData = data.splice(-4);
 
-
-class Piechart extends React.PureComponent {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            data,
-        };
-    }
-
-    render() {
-        const { data: chartData } = this.state;
-
-        return (
-            <>
+    return (
+        <>
 
             <Paper className='height100'>
                 <Chart className='fit'
-                    data={chartData}
+                       data={chartData}
                 >
 
                     <Title
@@ -87,22 +76,18 @@ class Piechart extends React.PureComponent {
 
                     <PieSeries
                         valueField="remains"
-                        // valueField="area"
                         argumentField="productName"
-                        // argumentField="country"
                     />
 
-
-                    <Animation />
+                    <Animation/>
                     <Legend position="bottom" rootComponent={Root} itemComponent={Item} labelComponent={Label}/>
                     {!data.length && <p className='noData'>No Data</p>}
                 </Chart>
 
             </Paper>
-            </>
+        </>
 
-        );
-    }
+    );
 }
 
 export default Piechart;

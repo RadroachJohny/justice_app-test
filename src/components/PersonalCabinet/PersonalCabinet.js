@@ -24,7 +24,6 @@ const PersonalCabinet = () => {
         hasError: firstNameHasError,
         valueChangeHandler: firstNameChangeHandler,
         inputBlurHandler: firstNameBlurHandler,
-        reset: resetFirstName,
     } = useInput(isEnoughSymbols, firstName);
     const {
         value: lasNameVal,
@@ -32,7 +31,6 @@ const PersonalCabinet = () => {
         hasError: lastNameHasError,
         valueChangeHandler: lastNameChangeHandler,
         inputBlurHandler: lastNameBlurHandler,
-        reset: resetLastName
     } = useInput(isEnoughSymbols, lastName);
     const {
         value: compNameVal,
@@ -40,21 +38,18 @@ const PersonalCabinet = () => {
         hasError: companyNameHasError,
         valueChangeHandler: companyNameChangeHandler,
         inputBlurHandler: companyNameBlurHandler,
-        reset: resetCompanyName
     } = useInput(isEnoughSymbols, companyName);
     const { value: productCatValue,
       isValid: productCatIsValid,
       hasError: productCatHasError,
       valueChangeHandler: productCatChangeHandler,
       inputBlurHandler: productCatBlurHandler,
-      reset: resetProductCat
     } = useInput(isEnoughSymbols, productCat);
     const { value: addressValue,
       isValid: addressIsValid,
       hasError: addressHasError,
       valueChangeHandler: addressChangeHandler,
       inputBlurHandler: addressBlurHandler,
-      reset: resetAddress
     } = useInput(isEnoughSymbols, address);
     const {
         value: newPasVal,
@@ -96,6 +91,7 @@ const PersonalCabinet = () => {
             if (elem.passwordValue === oldPass.current.value) {
                 return newUser;
             }
+            return elem;
         })
 
         localStorage.setItem('users', JSON.stringify(newUsersArr));
@@ -131,16 +127,12 @@ const PersonalCabinet = () => {
         setOldPassFieldValue(e.target.value);
     };
 
-
     const firstNameClasses = firstNameHasError ? `${classes["input-block"]} ${classes["invalid"]}` : `${classes["input-block"]}`;
     const lastNameClasses = lastNameHasError ? `${classes["input-block"]} ${classes["invalid"]}` : `${classes["input-block"]}`;
     const companyNameClasses = companyNameHasError ? `${classes["input-block"]} ${classes["invalid"]}` : `${classes["input-block"]}`;
     const newPassword = newPassHasError ? `${classes["input-block"]} ${classes["invalid"]}` : `${classes["input-block"]}`;
-    const productCategoryName = productCatHasError ? `${classes["input-block"]} ${classes["invalid"]}` : `${classes["input-block"]}`;
+    const productCategoryName = productCatHasError ? `${classes["input-block"]``} ${classes["invalid"]}` : `${classes["input-block"]}`;
     const addressName = addressHasError ? `${classes["input-block"]} ${classes["invalid"]} ${classes['wide']}` : `${classes['wide']} ${classes["input-block"]}`;
-
-    //Compare objects
-    // JSON.stringify(obj1) === JSON.stringify(obj2)
 
     return (
         <form onSubmit={submit} className={classes['cabinet-form']}>

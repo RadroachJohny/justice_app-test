@@ -9,8 +9,8 @@ ul {
 }
 
 .App {
+  position: relative;
   text-align: center;
-  /*display: flex;*/
   min-height: 100vh;
 }
 

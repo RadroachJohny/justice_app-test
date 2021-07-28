@@ -1,88 +1,75 @@
-import './stylecs.scss';
 import moment from 'moment';
-
-import * as React from 'react';
 import Paper from '@material-ui/core/Paper';
+import * as React from 'react';
+
+import './stylecs.scss';
+
 import {
-    Chart,
-    BarSeries,
-    Title,
-    ArgumentAxis,
-    ValueAxis,
+	Chart,
+	BarSeries,
+	Title,
+	ArgumentAxis,
+	ValueAxis,
 } from '@devexpress/dx-react-chart-material-ui';
-import { Animation } from '@devexpress/dx-react-chart';
-
-let salesArr = [];
-
-if(localStorage.getItem('salesList')) {
-    salesArr = JSON.parse(localStorage.getItem('salesList'));
-}
-
-const newSalesList = salesArr.map(elem => {
-    return {
-        ...elem,
-        totalEarned: elem.price *  elem.remains,
-        weekDay: moment(elem.saleDate).format('dddd'),
-    }
-});
-
-const data = [
-    { weekDay: 'Mon', totalEarned: 0 },
-    { weekDay: 'Tue', totalEarned: 0 },
-    { weekDay: 'Wed', totalEarned: 0 },
-    { weekDay: 'Thu', totalEarned: 0 },
-    { weekDay: 'Fri', totalEarned: 0 },
-    { weekDay: 'Sat', totalEarned: 0 },
-    { weekDay: 'Sun', totalEarned: 0 },
-];
-
-for (let i = 0; i < newSalesList.length; i++) {
-    for (let j = 0; j < data.length; j++) {
-        console.log(data[j])
-        if(data[j]['weekDay'] === newSalesList[i]['weekDay'].slice(0,3)) {
-            data[j]['totalEarned'] += newSalesList[i]['totalEarned']
-        }
-    }
-
-}
+import {Animation} from '@devexpress/dx-react-chart';
 
 
-class Demo extends React.PureComponent {
-    constructor(props) {
-        super(props);
+const BarChart = () => {
+	let salesArr = [];
 
-        this.state = {
-            data,
-        };
-    }
+	if (localStorage.getItem('salesList')) {
+		salesArr = JSON.parse(localStorage.getItem('salesList'));
+	}
 
-    render() {
-        const { data: chartData } = this.state;
+	//Move to App 'saleItemHandler' after next storage cash cleaning
+	const newSalesList = salesArr.map(elem => {
+		return {
+			...elem,
+			totalEarned: elem.price * elem.remains,
+			weekDay: moment(elem.saleDate).format('dddd'),
+		}
+	});
 
-        return (
-            <Paper className='barchart'>
-                <Chart
-                    data={chartData}
-                >
-                    <ArgumentAxis />
-                    <ValueAxis tickSize={10} showGrid={false} />
+	const data = [
+		{weekDay: 'Mon', totalEarned: 0},
+		{weekDay: 'Tue', totalEarned: 0},
+		{weekDay: 'Wed', totalEarned: 0},
+		{weekDay: 'Thu', totalEarned: 0},
+		{weekDay: 'Fri', totalEarned: 0},
+		{weekDay: 'Sat', totalEarned: 0},
+		{weekDay: 'Sun', totalEarned: 0},
+	];
 
-                    <BarSeries
-                        valueField="totalEarned"
-                        argumentField="weekDay"
-                    />
-                    <Title text="Sales Overview" />
-                    <Title text="Graph sales for all days" />
-                    <Animation />
-                </Chart>
-            </Paper>
-        );
-    }
+	for (let i = 0; i < newSalesList.length; i++) {
+		for (let j = 0; j < data.length; j++) {
+			if (data[j]['weekDay'] === newSalesList[i]['weekDay'].slice(0, 3)) {
+				data[j]['totalEarned'] += newSalesList[i]['totalEarned']
+			}
+		}
+	}
+
+	return (
+		<Paper className='barchart'>
+			<Chart
+				data={data}
+			>
+				<ArgumentAxis/>
+				<ValueAxis tickSize={10} showGrid={false}/>
+
+				<BarSeries
+					valueField="totalEarned"
+					argumentField="weekDay"
+				/>
+				<Title text="Sales Overview"/>
+				<Title text="Graph sales for all days"/>
+				<Animation/>
+			</Chart>
+		</Paper>
+	);
 }
 
 
-
-export default Demo;
+export default BarChart;
 
 
 

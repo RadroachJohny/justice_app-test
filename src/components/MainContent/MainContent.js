@@ -10,15 +10,15 @@ import classes from './style.module.scss';
 
 
 const MainContent = (props) => {
-
     return (
         <>
             <Route path='/main-page'>
                 <MainNavigation/>
+
                 <div className={classes.mainWrapper}>
                     <MainHeader title={'Sales statistics'} subtitle={'Welcome to CRM dashboard'}
                                 modalShow={props.modalShow}/>
-                    <MainPage/>
+                    <MainPage itemsList={props.itemsList} salesList={props.salesList}/>
                 </div>
             </Route>
 
@@ -26,6 +26,7 @@ const MainContent = (props) => {
 
             <Route path='/personal-cabinet'>
                 <MainNavigation/>
+
                 <div className={classes.mainWrapper}>
                     <MainHeader title={'Personal Cabinet'} subtitle={'Information about account'}
                                 modalShow={props.modalShow}/>

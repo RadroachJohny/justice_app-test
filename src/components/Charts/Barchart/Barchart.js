@@ -1,4 +1,5 @@
 import './stylecs.scss';
+import moment from 'moment';
 
 import * as React from 'react';
 import Paper from '@material-ui/core/Paper';
@@ -11,16 +12,44 @@ import {
 } from '@devexpress/dx-react-chart-material-ui';
 import { Animation } from '@devexpress/dx-react-chart';
 
-const data = [
-    { year: 'Mon', population: 500 },
-    { year: 'Tue', population: 150 },
-    { year: 'Wed', population: 300 },
-    { year: 'Thu', population: 60 },
-    { year: 'Fri', population: 175 },
-    { year: 'Sat', population: 600 },
-    { year: 'Sun', population: 350 },
-    { year: 'Sup', population: 350 },
-];
+
+
+
+const salesListArr = JSON.parse(localStorage.getItem('salesList'));
+
+const testArr = salesListArr.map(elem => {
+  return {
+    ...elem,
+    weekday: moment(elem.saleDate).format('dddd'),
+    totalEarnedPerItem: elem.price * elem.remains,
+  }
+});
+
+const dataObj = {};
+
+for(let i = 0; i < testArr.length; i++) {
+  if(dataObj[testArr[i]['weekday']]) {
+    dataObj[testArr[i]['weekday']] += testArr[i]['totalEarnedPerItem']
+  } else {
+    dataObj[testArr[i]['weekday']] = testArr[i]['totalEarnedPerItem']
+  }
+}
+
+const data = [];
+
+for(let key in dataObj) {
+  data.push({year: key, population: dataObj[key]})
+}
+
+// const data = [
+//     { year: 'Mon', population: 500 },
+//     { year: 'Tue', population: 150 },
+//     { year: 'Wed', population: 300 },
+//     { year: 'Thu', population: 60 },
+//     { year: 'Fri', population: 175 },
+//     { year: 'Sat', population: 600 },
+//     { year: 'Sun', population: 350 },
+// ];
 
 class Demo extends React.PureComponent {
     constructor(props) {
@@ -35,7 +64,7 @@ class Demo extends React.PureComponent {
         const { data: chartData } = this.state;
 
         return (
-            <Paper className='barchart'>
+            <Paper id='testId' className='barchart'>
                 <Chart
                     data={chartData}
                 >

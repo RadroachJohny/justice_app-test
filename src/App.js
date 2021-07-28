@@ -24,7 +24,10 @@ function App() {
     const saleItemHandler = (id) => {
         const chosenElemForSale = itemsListArr.find((elem) => elem.id === id);
         const dt = new Date();
-        chosenElemForSale.saleDate = `${dt.getDate()}.${dt.getMonth() + 1}.${dt.getFullYear()}`;
+        const month = dt.getMonth() < 10 ? `0${dt.getMonth() + 1}` : dt.getMonth() + 1;
+        const day = dt.getDate() < 10 ? `0${dt.getDate()}` : dt.getDate();
+
+        chosenElemForSale.saleDate = `${dt.getFullYear()}.${month}.${day+1}`;
         //Delete item from My Products list and Local Storage
         deleteItemFromItemsList(id);
         //Add newly added elem to sell list

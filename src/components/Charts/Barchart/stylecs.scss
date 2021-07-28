@@ -1,12 +1,13 @@
 .barchart {
   height: 100%;
   & #center-axis-container svg {
-    & path {
-      //display: none;
-    }
     & rect {
-      fill: #5B6ACD;
+      fill: #5b6acd;
     }
+  }
+  & #center-axis-container > div:first-child svg::after {
+    display: inline-block !important;
+    content: "k" !important;
   }
   #top-container {
     display: flex;
@@ -21,14 +22,13 @@
         font-weight: 600;
         font-size: 18px;
         line-height: 18px;
-        color: #2B3844;
+        color: #2b3844;
         & + * {
-            font-weight: normal;
-            font-size: 12px;
-            line-height: 12px;
+          font-weight: normal;
+          font-size: 12px;
+          line-height: 12px;
         }
       }
-
     }
   }
 }

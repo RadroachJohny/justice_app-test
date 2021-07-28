@@ -15,8 +15,8 @@ import {
 } from '@devexpress/dx-react-chart-material-ui';
 import { Animation } from '@devexpress/dx-react-chart';
 
-const productArr = JSON.parse(localStorage.getItem('productList'));
-const data = productArr.splice(-4) || [];
+const productArr = JSON.parse(localStorage.getItem('productList')) || [];
+const data = productArr.splice(-4);
 
 // const data = [
 //     { country: 'Canada', area: 7 },

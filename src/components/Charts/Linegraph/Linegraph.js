@@ -106,10 +106,9 @@ const Linegraph = () => {
         return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
-
     return (
         <Paper className='line-height100'>
-            <Chart
+            {data.length >= 3 && <Chart
                 className={`${'line-height100'} ${'paddingLR'}`}
                 data={data}
             >
@@ -119,14 +118,15 @@ const Linegraph = () => {
                     valueField="totalSumSold"
                     argumentField="minutesPassed"
                 />}
-                {data.length === 0 && <p className='noData'>No Data</p>}
+
                 <Legend position="bottom" rootComponent={Root} itemComponent={Item} labelComponent={Label}/>
                 <Title
                     text={`Total earned`}
                     textComponent={TitleText}
                 />
                 <Animation/>
-            </Chart>
+            </Chart>}
+             {data.length < 3 && <p className='noData'>No Data</p>}
         </Paper>
     );
 }

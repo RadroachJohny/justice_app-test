@@ -9,64 +9,6 @@ const isEnoughSymbols = (value) => value.trim().length > 4;
 const isNumber = (value) => !isNaN(value);
 
 const ProductModal = (props) => {
-    const {
-        value: storeValue,
-        isValid: storeIsValid,
-        hasError: storeHasError,
-        valueChangeHandler: storeChangeHandler,
-        inputBlurHandler: storeBlurHandler,
-    } = useInput(isEnoughSymbols);
-    const {
-        value: priceValue,
-        isValid: priceIsValid,
-        hasError: priceHasError,
-        valueChangeHandler: priceChangeHandler,
-        inputBlurHandler: priceBlurHandler,
-    } = useInput(isNumber);
-    const {
-        value: prodNameValue,
-        isValid: prodNameIsValid,
-        hasError: prodNameHasError,
-        valueChangeHandler: prodNameChangeHandler,
-        inputBlurHandler: prodNameBlurHandler,
-    } = useInput(isEnoughSymbols);
-    const {
-        value: prodCatValue,
-        isValid: prodCatIsValid,
-        hasError: prodCatHasError,
-        valueChangeHandler: prodCatChangeHandler,
-        inputBlurHandler: prodCatBlurHandler,
-    } = useInput(isEnoughSymbols);
-    const {
-        value: quantityValue,
-        isValid: quantityIsValid,
-        hasError: quantityHasError,
-        valueChangeHandler: quantityChangeHandler,
-        inputBlurHandler: quantityBlurHandler,
-    } = useInput(isNumber);
-    const {
-        value: weightValue,
-        isValid: weightIsValid,
-        hasError: weightHasError,
-        valueChangeHandler: weightChangeHandler,
-        inputBlurHandler: weightBlurHandler,
-    } = useInput(isNumber);
-
-    let formIsValid = false;
-
-    if (storeIsValid && priceIsValid && prodNameIsValid && prodCatIsValid && quantityIsValid && weightIsValid) {
-        formIsValid = true;
-    }
-
-
-
-    const modalOverlayRef = useRef();
-
-    const overlayClickCheck = (e) => {
-        if (e.target === modalOverlayRef.current) {
-            props.modalClose();
-        }
-    }
 
     let defaultValues = {
         store: '',
@@ -85,11 +27,72 @@ const ProductModal = (props) => {
             store: someVar.store,
             price: someVar.price,
             productName: someVar.productName,
-            category: someVar.category,
-            remains: someVar.remains,
+            productCat: someVar.category,
+            quantity: someVar.remains,
             weightVolume: someVar.weightVolume,
         }
     }
+
+    const {
+        value: storeValue,
+        isValid: storeIsValid,
+        hasError: storeHasError,
+        valueChangeHandler: storeChangeHandler,
+        inputBlurHandler: storeBlurHandler,
+    } = useInput(isEnoughSymbols, defaultValues.store);
+    const {
+        value: priceValue,
+        isValid: priceIsValid,
+        hasError: priceHasError,
+        valueChangeHandler: priceChangeHandler,
+        inputBlurHandler: priceBlurHandler,
+    } = useInput(isNumber, defaultValues.price);
+    const {
+        value: prodNameValue,
+        isValid: prodNameIsValid,
+        hasError: prodNameHasError,
+        valueChangeHandler: prodNameChangeHandler,
+        inputBlurHandler: prodNameBlurHandler,
+    } = useInput(isEnoughSymbols, defaultValues.productName);
+    const {
+        value: prodCatValue,
+        isValid: prodCatIsValid,
+        hasError: prodCatHasError,
+        valueChangeHandler: prodCatChangeHandler,
+        inputBlurHandler: prodCatBlurHandler,
+    } = useInput(isEnoughSymbols, defaultValues.productCat);
+    const {
+        value: quantityValue,
+        isValid: quantityIsValid,
+        hasError: quantityHasError,
+        valueChangeHandler: quantityChangeHandler,
+        inputBlurHandler: quantityBlurHandler,
+    } = useInput(isNumber, defaultValues.quantity);
+    const {
+        value: weightValue,
+        isValid: weightIsValid,
+        hasError: weightHasError,
+        valueChangeHandler: weightChangeHandler,
+        inputBlurHandler: weightBlurHandler,
+    } = useInput(isNumber, defaultValues.weightVolume);
+
+    let formIsValid = false;
+
+    if (storeIsValid && priceIsValid && prodNameIsValid && prodCatIsValid && quantityIsValid && weightIsValid) {
+        formIsValid = true;
+    }
+
+
+
+    const modalOverlayRef = useRef();
+
+    const overlayClickCheck = (e) => {
+        if (e.target === modalOverlayRef.current) {
+            props.modalClose();
+        }
+    }
+
+
 
     const dt = new Date();
     const month = dt.getMonth() < 10 ? `0${dt.getMonth() + 1}` : dt.getMonth() + 1;
@@ -139,12 +142,12 @@ const ProductModal = (props) => {
                 <form className={classes['modal-form']}>
 
 
-                    <div className={storeClass}> <input value={storeValue} onChange={storeChangeHandler} onBlur={storeBlurHandler}type="text" placeholder='store' defaultValue={defaultValues.store}></input></div>
-                     <div className={priceClass}><input value={priceValue} onChange={priceChangeHandler} onBlur={priceBlurHandler} type="text" placeholder='price' defaultValue={defaultValues.price} ></input></div>
-                    <div className={prodNameClass}>  <input value={prodNameValue} onChange={prodNameChangeHandler} onBlur={prodNameBlurHandler}type="text" placeholder='product name' defaultValue={defaultValues.productName}></input></div>
-                    <div className={prodCatClass}>  <input value={prodCatValue} onChange={prodCatChangeHandler} onBlur={prodCatBlurHandler} type="text" placeholder='product category' defaultValue={defaultValues.category}></input></div>
-                     <div className={quantityClass}><input value={quantityValue} onChange={quantityChangeHandler} onBlur={quantityBlurHandler}  type="text" placeholder='quantity of goods' defaultValue={defaultValues.remains} /></div>
-                    <div className={weightClass}><input value={weightValue} onChange={weightChangeHandler} onBlur={weightBlurHandler}  type="text" placeholder='weight/ volume of one item' defaultValue={defaultValues.weightVolume} /></div>
+                    <div className={storeClass}> <input value={storeValue} onChange={storeChangeHandler} onBlur={storeBlurHandler}type="text" placeholder='store' ></input></div>
+                     <div className={priceClass}><input value={priceValue} onChange={priceChangeHandler} onBlur={priceBlurHandler} type="text" placeholder='price'  ></input></div>
+                    <div className={prodNameClass}>  <input value={prodNameValue} onChange={prodNameChangeHandler} onBlur={prodNameBlurHandler}type="text" placeholder='product name' ></input></div>
+                    <div className={prodCatClass}>  <input value={prodCatValue} onChange={prodCatChangeHandler} onBlur={prodCatBlurHandler} type="text" placeholder='product category' ></input></div>
+                     <div className={quantityClass}><input value={quantityValue} onChange={quantityChangeHandler} onBlur={quantityBlurHandler}  type="text" placeholder='quantity of goods'  /></div>
+                    <div className={weightClass}><input value={weightValue} onChange={weightChangeHandler} onBlur={weightBlurHandler}  type="text" placeholder='weight/ volume of one item'  /></div>
 
                     <button onClick={(e) => {
                         return !props.id ? universalFunc(e, 'addItemProductList') : universalFunc(e, 'edit');

@@ -48,6 +48,10 @@ const BarChart = () => {
 		}
 	}
 
+	const dataIsEmpty = data.reduce((acc, elem) => {
+		return acc + elem.totalEarned;
+	}, 0);
+
 	return (
 		<Paper className='barchart'>
 			<Chart
@@ -63,6 +67,8 @@ const BarChart = () => {
 				<Title text="Sales Overview"/>
 				<Title text="Graph sales for all days"/>
 				<Animation/>
+
+				{!dataIsEmpty && <p className='noData'>No Data</p>}
 			</Chart>
 		</Paper>
 	);

@@ -86,18 +86,12 @@ const CreateAccount = () => {
 
   const passwordsCorrect = !passwordHasError && !repeatPassHasError;
 
-  const formValidation = (e) => {
+  const formSubmit = (e) => {
     e.preventDefault();
 
-    firstNameBlurHandler();
-    lastNameBlurHandler();
-    companyNameBlurHandler();
-    emailBlurHandler();
-    passwordChangeHandler();
-    repeatPassChangeHandler();
-
-
     if (!formIsValid || passwordsNotIdentical) {
+      console.log(formIsValid);
+      console.log(passwordsNotIdentical);
       return;
     }
 
@@ -131,6 +125,16 @@ const CreateAccount = () => {
       localStorage.setItem('isCreated', JSON.stringify(true))
     }
 
+
+  }
+
+  const formValidation = (e) => {
+    firstNameBlurHandler();
+    lastNameBlurHandler();
+    companyNameBlurHandler();
+    emailBlurHandler();
+    passwordChangeHandler();
+    repeatPassChangeHandler();
   };
 
   const setPasswordForComparison = (e) => (pass, blurHandler) => {
@@ -148,7 +152,7 @@ const CreateAccount = () => {
         <div className={classes["form-block"]}>
           <p className={classes["form-title"]}>Create an account</p>
 
-          <form  className={classes.form}>
+          <form onSubmit={formSubmit}  className={classes.form}>
             <div className={classes["username-block"]}>
               <div className={firstNameClasses}>
                 <label htmlFor="firstName">First name</label>
@@ -173,13 +177,13 @@ const CreateAccount = () => {
             </div>
             <div className={passwordClasses}>
               <label htmlFor="password">Password</label>
-              <input  value={passwordValue} onChange={passwordChangeHandler} onBlur={(e) => setPasswordForComparison.call(null, e)('pass1', passwordBlurHandler)} id="password" type="password" placeholder="Password" />
+              <input  value={passwordValue} onChange={passwordChangeHandler} onBlur={(e) => setPasswordForComparison.call(null, e)('pass1', passwordBlurHandler)} id="password" type="text" placeholder="Password" />
               {passwordHasError && <p className={classes.errorMes}>{passErrorMessage}</p>}
               {passwordsNotIdentical && passwordsCorrect && <p className={classes.identicalError}>Passwords mismatch</p>}
             </div>
             <div className={repeatPasswordClasses}>
               <label htmlFor="resetpassword">Repeat password</label>
-              <input value={repeatPassValue} onChange={repeatPassChangeHandler} onBlur={(e) => setPasswordForComparison.call(null, e)('pass2', repeatPassBlurHandler)} id="resetpassword" type="password" placeholder="Repeat password" />
+              <input value={repeatPassValue} onChange={repeatPassChangeHandler} onBlur={(e) => setPasswordForComparison.call(null, e)('pass2', repeatPassBlurHandler)} id="resetpassword" type="text" placeholder="Repeat password" />
               {repeatPassHasError && <p className={classes.errorMes}>{repeatPassErrorMessage}</p>}
               {passwordsNotIdentical && passwordsCorrect && <p className={classes.identicalError}>Passwords mismatch</p>}
             </div>

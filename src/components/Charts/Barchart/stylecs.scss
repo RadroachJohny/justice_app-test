@@ -1,5 +1,6 @@
 .barchart {
   height: 100%;
+  position: relative;
   & #center-axis-container svg {
     & path {
       //display: none;
@@ -31,4 +32,15 @@
 
     }
   }
+}
+
+.noData {
+  position: absolute;
+  font-size: 30px;
+  margin: 0;
+  padding: 0;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-weight: bold;
 }

@@ -1,11 +1,10 @@
 .table {
   &-head {
     background-color: #2B3844;
+    width: 100%;
     &__list {
       display: grid;
       grid-template-columns: repeat(9, 11.11%);
-      padding-top: 20px;
-      padding-bottom: 20px;
       margin-bottom: 24px;
       border-radius: 3px;
       font-weight: 500;
@@ -15,3 +14,4 @@
     }
   }
 }
+

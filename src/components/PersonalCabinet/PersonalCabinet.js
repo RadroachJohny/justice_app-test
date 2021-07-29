@@ -136,7 +136,7 @@ const PersonalCabinet = () => {
     const lastNameClasses = lastNameHasError ? `${classes["input-block"]} ${classes["invalid"]}` : `${classes["input-block"]}`;
     const companyNameClasses = companyNameHasError ? `${classes["input-block"]} ${classes["invalid"]}` : `${classes["input-block"]}`;
     const newPassword = newPassHasError ? `${classes["input-block"]} ${classes["invalid"]}` : `${classes["input-block"]}`;
-    const productCategoryName = productCatHasError ? `${classes["input-block"]``} ${classes["invalid"]}` : `${classes["input-block"]}`;
+    const productCategoryName = productCatHasError ? `${classes["input-block"]} ${classes["invalid"]}` : `${classes["input-block"]}`;
     const addressName = addressHasError ? `${classes["input-block"]} ${classes["invalid"]} ${classes['wide']}` : `${classes['wide']} ${classes["input-block"]}`;
 
     return (

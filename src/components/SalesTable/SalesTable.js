@@ -24,7 +24,7 @@ const SalesTable = (props) => {
           />
 
 					<div className={classes['table-wrapper']}>
-						<TableHead amount={'Remains'} actions={'Actions'}/>
+						<TableHead amount={'Remains'} actions={'Actions'} productList={props.itemsList}/>
 						{props.itemsList.map((elem, i) => (
 							<SalesTableBody sale={props.sale} onDelete={props.onDelete} edit={props.edit} key={elem.id} data={elem}
 															index={i}/>
@@ -44,7 +44,7 @@ const SalesTable = (props) => {
           />
 
 					<div className={classes['table-wrapper']}>
-						<TableHead amount={'Sold Items'} actions={'Last Sale'}/>
+						<TableHead amount={'Sold Items'} actions={'Last Sale'} productList={props.salesList}/>
 
 						{props.salesList.map((elem, i) => (
 							<SalesTableBody key={elem.id} data={elem} index={i}/>

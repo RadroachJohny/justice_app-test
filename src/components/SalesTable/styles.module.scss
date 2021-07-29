@@ -2,6 +2,7 @@
   color: #000000;
   &-wrapper {
     width: 100%;
+    padding-bottom: 24px;
   }
   &-head {
     background-color: #2B3844;
@@ -26,6 +27,17 @@
   background-color: #F8F8F8;
   padding-left: 330px;
   padding-right: 56px;
+}
+
+.noData {
+  margin: 0;
+  padding-top: 20px;
+  padding-bottom: 20px;
+  font-size: 30px;
+  font-weight: bold;
+  text-align: center;
+  color: #000;
+
 }
 
 

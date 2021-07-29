@@ -1,4 +1,3 @@
-import React from 'react';
 import {Legend} from '@devexpress/dx-react-chart-material-ui';
 import {withStyles} from '@material-ui/core/styles';
 

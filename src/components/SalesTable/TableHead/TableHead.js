@@ -13,14 +13,21 @@ const TableHead = (props) => {
     { name: props.actions }
   ];
 
+  const arrIsEmpty = props.productList.length > 0 ;
+
   return (
-    <div className={classes["table-head"]}>
-      <ul className={classes["table-head__list"]}>
+    <>
+      {!arrIsEmpty && <p className={classes.noData}>No Data</p>}
+      {arrIsEmpty &&<div className={classes["table-head"]}>
+
+
+       <ul className={classes["table-head__list"]}>
         {productElement.map(({ name }) => {
-          return <li>{name}</li>;
-        })}
+        return <li>{name}</li>
+      })}
       </ul>
-    </div>
+    </div>}
+    </>
   );
 };
 

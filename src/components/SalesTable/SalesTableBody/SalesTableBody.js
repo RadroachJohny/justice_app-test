@@ -1,3 +1,5 @@
+import React from 'react';
+
 import pencil from "../../../assets/images/pencil.svg";
 import cross from "../../../assets/images/delete.svg";
 

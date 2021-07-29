@@ -1,3 +1,5 @@
+import React from 'react';
+
 import CreateProductBtn from "../../CreateProductBtn/CreateProductBtn";
 import classes from './styles.module.scss';
 

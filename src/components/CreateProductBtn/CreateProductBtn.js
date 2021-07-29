@@ -1,3 +1,5 @@
+import React from 'react';
+
 import classes from "./styles.module.scss";
 import fileImg from "../../assets/images/file-img.svg";
 

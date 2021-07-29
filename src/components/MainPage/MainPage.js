@@ -1,3 +1,5 @@
+import React from 'react';
+
 import Linegraph from '../Charts/Linegraph/Linegraph';
 import Piechart from "../Charts/Piechart/Piechart";
 import Barchart from "../Charts/Barchart/Barchart";

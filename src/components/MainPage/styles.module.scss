@@ -1,0 +1,27 @@
+.wrapper {
+  width: 100%;
+  display: flex;
+  gap: 24px;
+}
+
+.col1 {
+  width: 455px;
+  align-self: stretch;
+}
+
+.piechart {
+  height: 325px;
+}
+
+.linegraph {
+  height: 220px;
+  margin-top: 23px;
+}
+
+.barchart {
+  flex-grow: 1;  
+}
+
+.graph {
+  color: black;
+}
